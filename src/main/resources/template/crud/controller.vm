@@ -1,0 +1,97 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+#foreach( $campo in ${entidade.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
+#end
+#end
+
+@Controller
+@RequestMapping("/${entidade.classe.toLowerCase()}")
+public class ${entidade.classe}Controller {
+	
+	private static final String LAYOUT = "layout";
+	private static final String PAGECONTENT = "pageContent";
+	
+	private static final String REDIRECT = "redirect:/${entidade.classe.toLowerCase()}";
+	private static final String LIST = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/list.jsp";
+	private static final String FORM = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/form.jsp";
+	private static final String EDIT_FORM = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/formeditar.jsp";
+
+    @Autowired
+    private ${entidade.classe}Service ${entidade.classe.toLowerCase()}Service;
+    
+#foreach($campo in ${entidade.campos} )
+	#if($campo.referencia)
+    @Autowired
+    private ${campo.tipo}Service ${campo.tipo.toLowerCase()}Service;
+	#end
+#end
+
+    @GetMapping
+    public String listar(Model model) {
+        model.addAttribute("${entidade.classe.toLowerCase()}s", ${entidade.classe.toLowerCase()}Service.listar());
+        model.addAttribute(PAGECONTENT, LIST);
+        return LAYOUT;
+    }
+
+    @GetMapping("/novo")
+    public String novo(Model model) {
+    
+    #foreach($campo in ${entidade.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		#end
+	
+		#if($campo.tipo == 'Enum')
+		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+		#end
+	#end
+        model.addAttribute(PAGECONTENT, FORM);
+    	return LAYOUT;
+    }
+    
+    @GetMapping("/iniciarEditar")
+    public String iniciarEditar(Model model, @RequestParam String id) {
+
+    #foreach($campo in ${entidade.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		#end
+		
+		#if($campo.tipo == 'Enum')
+		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+		#end
+	#end
+        model.addAttribute("${entidade.classe.toLowerCase()}Edit", ${entidade.classe.toLowerCase()}Service.obter(id));
+        model.addAttribute(PAGECONTENT, EDIT_FORM);
+        return LAYOUT;
+    }
+    
+    @PostMapping
+    public String salvar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
+
+    	if (${entidade.classe.toLowerCase()}.getAction().equals("editar")) {
+        	${entidade.classe.toLowerCase()}Service.editar(${entidade.classe.toLowerCase()});
+    	} else {
+            ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
+    	}
+    	
+        return REDIRECT;
+    }
+    
+    @GetMapping("/remover")
+    public String remover(@RequestParam String id) {
+    	${entidade.classe.toLowerCase()}Service.remover(id);
+        return REDIRECT;
+    }
+
+}

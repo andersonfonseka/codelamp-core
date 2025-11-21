@@ -1,0 +1,91 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+#foreach( $campo in ${entidade.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
+#end
+#end
+
+@Service
+public class ${entidade.classe}Service {
+
+	private final Map<String, ${entidade.classe}> ${entidade.classe.toLowerCase()}s = new HashMap<String, ${entidade.classe}>();
+	
+#foreach($campo in ${entidade.campos} )
+	#if($campo.referencia)
+	    @Autowired
+	    private ${campo.tipo}Service ${campo.tipo.toLowerCase()}Service;
+	#end
+#end
+	
+	public void salvar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
+	
+	#foreach($campo in ${entidade.campos} )
+	
+	#if($campo.referencia)
+		${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
+	#end
+	
+	#if($campo.tipo == 'Enum')
+		${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
+	#end
+	
+	#end
+	
+		${entidade.classe.toLowerCase()}.setId(UUID.randomUUID().toString());
+		this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
+	}
+	
+	public void editar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
+		
+		if (${entidade.classe.toLowerCase()}s.containsKey(${entidade.classe.toLowerCase()}.getId())) {
+
+	#foreach($campo in ${entidade.campos} )
+	#if($campo.referencia)
+		${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
+	#end
+
+
+	#if($campo.tipo == 'Enum')
+		${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
+	#end
+
+	#end
+
+		this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
+
+    	}
+	}
+	
+	public ${entidade.classe} obter(String id) {
+	
+		${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
+		${entidade.classe.toLowerCase()}.setId(id);
+    			
+    	return this.${entidade.classe.toLowerCase()}s.get(${entidade.classe.toLowerCase()}.getId());
+	}
+
+	public void remover(String id) {
+
+		${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
+		${entidade.classe.toLowerCase()}.setId(id);
+		
+    	if (${entidade.classe.toLowerCase()}s.containsKey(${entidade.classe.toLowerCase()}.getId())) {
+    		${entidade.classe.toLowerCase()}s.remove(${entidade.classe.toLowerCase()}.getId());
+    	}
+	}
+	
+	public List<${entidade.classe}> listar(){
+		return new ArrayList<${entidade.classe}>(this.${entidade.classe.toLowerCase()}s.values());
+	}
+	
+}

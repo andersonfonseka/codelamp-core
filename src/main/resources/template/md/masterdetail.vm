@@ -1,0 +1,80 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+
+<div class="container">
+	<p>
+
+		<nav aria-label="breadcrumb" class="mb-3">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/">Início</a></li>
+				<li class="breadcrumb-item"><a href="/${mestre.entidadeReferencia.entidade.classe.toLowerCase()}">${mestre.entidadeReferencia.entidade.titulo}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
+			</ol>
+		</nav>
+	<p>
+	<div class="bd-example-snippet bd-code-snippet">
+		<div class="bd-example m-0 border-0">
+
+			<h3>${mestre.titulo}</h3>
+			<hr />
+
+			<form class="row needs-validation" name="${mestre.nomePasta}form" method="POST"
+				action="/${mestre.nomePasta}" novalidate>
+
+				<input type="hidden" name="${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}Id" value="*{${mestre.entidadeReferencia.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.classe.substring(1)}X.id}"> 
+				<input type="hidden" name="id"> 
+				<input type="hidden" name="action" value="novo">
+
+					<div class="col-6 mb-3">
+						<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
+						<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
+					</div>
+					
+					#foreach( $campo in ${mestre.campos} )
+						#parse("template/campos.vm")
+					#end
+
+				<p>
+				<div class="col mb-3">
+					<button type="submit" id="btnSalvar"
+						class="btn btn-dark btn-sm py-1">
+						<i class="bi-save"></i> Salvar
+					</button>
+				</div>
+			</form>
+			
+			<hr />
+
+			<table class="table caption-top">
+				<thead>
+					<tr>
+					
+					#foreach( $campo in ${mestre.campos} )
+						<th scope="col">${campo.rotulo}</th>
+					#end
+						<th scope="col"></th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="p" items="*{${mestre.nomePasta}s}">
+						<tr>
+					
+						#foreach($campo in ${mestre.campos})
+							#if($campo.referencia)
+							<td>*{p.${campo.nome}.${campo.campoReferencia}}</td>
+							#elseif($campo.tipo == 'Date')
+							<td>*{p.${campo.nome}Str}</td>
+							#else
+							<td>*{p.${campo.nome}}</td>
+							#end
+						#end
+							<td><a class="btn btn-sm btn-danger" href="/${mestre.nomePasta}/remover?id=${p.id}">Remover</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>

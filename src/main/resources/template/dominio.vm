@@ -1,0 +1,30 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Dominio${campo.nome} {
+
+	public static Dominio${campo.nome} INSTANCE;
+	
+	private List<String> lista = new ArrayList<>();
+	
+	public static Dominio${campo.nome} obterInstancia() {
+		if (INSTANCE == null) {
+			INSTANCE = new Dominio${campo.nome}();
+		}
+		return INSTANCE;
+	}
+	
+	
+	private Dominio${campo.nome}() {
+		#foreach( $campo in ${campo.valores} )
+			lista.add("${campo}");
+		#end
+	}
+	
+	public List<String> getItems(){
+		return this.lista;
+	}
+	
+}

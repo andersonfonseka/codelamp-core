@@ -1,0 +1,83 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
+
+#foreach( $campo in ${entidade.filtro.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
+#end
+#end
+
+#foreach( $campo in ${entidade.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
+#end
+#end
+
+public class $entidade.classe {
+	
+	private String id;
+	
+	private String action;
+
+#foreach( $campo in ${entidade.filtro.campos} )
+	#if($campo.tipo == 'Date')
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
+		private $campo.tipo ${campo.nome};
+	#elseif($campo.referencia)
+		private String ${campo.nome.toLowerCase()}Id;
+		private $campo.tipo $campo.nome;
+	#elseif($campo.tipo == 'Enum')
+		private String ${campo.nome.toLowerCase()}Id;
+		private String $campo.nome;
+	#else
+		private $campo.tipo $campo.nome;
+	#end
+#end
+	
+	public ${entidade.classe}() {}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	#foreach( $campo in ${entidade.filtro.campos} )
+		#parse("template/operacoes.vm")
+	#end
+	
+	#foreach( $campo in ${entidade.campos} )
+		#parse("template/operacoes.vm")
+	#end
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		$entidade.classe other = ($entidade.classe) obj;
+		return Objects.equals(id, other.id);
+	}
+}

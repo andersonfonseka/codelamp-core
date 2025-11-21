@@ -1,0 +1,97 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.codelamp.${entidade.campoMestre.tipo.toLowerCase()}.${entidade.campoMestre.tipo};
+
+#foreach( $campo in ${entidade.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
+#end
+#end
+
+public class $entidade.classe {
+	
+	private String id;
+	
+	private String action;
+	
+	private ${entidade.campoMestre.tipo} ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	
+	private String ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id;
+
+#foreach( $campo in ${entidade.campos} )
+	#if($campo.tipo == 'Date')
+		@DateTimeFormat(pattern = "yyyy-MM-dd")
+		private $campo.tipo ${campo.nome};
+	#elseif($campo.referencia)
+		private String ${campo.nome.toLowerCase()}Id;
+		private $campo.tipo $campo.nome;
+	#elseif($campo.tipo == 'Enum')
+		private String ${campo.nome.toLowerCase()}Id;
+		private String $campo.nome;
+	#else
+		private $campo.tipo $campo.nome;
+	#end
+#end
+
+	
+	public ${entidade.classe}() {}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+
+	public void set${entidade.campoMestre.tipo}(${entidade.campoMestre.tipo} ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}){
+		this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)} = ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	}
+	
+	public ${entidade.campoMestre.tipo} get${entidade.campoMestre.tipo}(){
+		return this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	}
+	
+	public void set${entidade.campoMestre.tipo}Id(String id){
+		this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id = id;
+	}
+	
+	public String get${entidade.campoMestre.tipo}Id(){
+		return this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id;
+	}
+	
+	#foreach( $campo in ${entidade.campos} )
+		#parse("template/operacoes.vm")
+	#end
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		$entidade.classe other = ($entidade.classe) obj;
+		return Objects.equals(id, other.id);
+	}
+}

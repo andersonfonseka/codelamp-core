@@ -1,0 +1,62 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+
+<div class="container">
+	<p>
+
+		<nav aria-label="breadcrumb" class="mb-3">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="/">Início</a></li>
+				<li class="breadcrumb-item">${entidade.modulo.titulo}</li>
+				<li class="breadcrumb-item">${entidade.titulo}</li>
+			</ol>
+		</nav>
+	<p>
+	<div class="bd-example-snippet bd-code-snippet"
+		style="height: 600px; overflow-y: auto;">
+		<div class="bd-example m-0 border-0">
+
+			<h3>${entidade.titulo}</h3>
+			<hr />
+			<a class="btn btn-dark btn-sm py-1" href="/${entidade.classe.toLowerCase()}/novo"><i
+				class="bi bi-file-earmark-plus"></i> Novo</a>
+			<hr />
+
+			<table class="table caption-top">
+				<thead>
+					<tr>
+					
+					#foreach( $campo in ${entidade.campos} )
+						<th scope="col">${campo.rotulo}</th>
+					#end
+						<th scope="col"></th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="p" items="*{${entidade.classe.toLowerCase()}s}">
+						<tr>
+
+						#foreach($campo in ${entidade.campos})
+							#if($campo.referencia)
+							<td>*{p.${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}.${campo.campoReferencia}}</td>
+							#elseif($campo.tipo == 'Date')
+							<td>*{p.${campo.nome}Str}</td>
+							#else
+							<td>*{p.${campo.nome}}</td>
+							#end
+						#end
+							<td><a class="btn btn-warning btn-sm py-1" href="/${entidade.classe.toLowerCase()}/iniciarEditar?id=${p.id}">Editar</a>
+							
+						#foreach($acao in ${entidade.acoes})
+							<a class="btn btn-warning btn-sm py-1" href="/${acao.mestre.classe.toLowerCase()}/id?id=${p.id}">${acao.titulo}</a>
+						#end
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<br>
+		</div>
+	</div>
+</div>
