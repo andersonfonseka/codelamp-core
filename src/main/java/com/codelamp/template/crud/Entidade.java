@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.codelamp.template.dominio.Acao;
-import com.codelamp.template.dominio.Campo;
 import com.codelamp.template.dominio.EntidadeReferencia;
 import com.codelamp.template.dominio.Modulo;
+import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class Entidade {

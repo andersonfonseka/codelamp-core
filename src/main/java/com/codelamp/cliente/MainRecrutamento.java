@@ -2,15 +2,15 @@ package com.codelamp.cliente;
 
 import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.Acao;
-import com.codelamp.template.dominio.CampoAreaTexto;
-import com.codelamp.template.dominio.CampoArquivo;
-import com.codelamp.template.dominio.CampoDate;
-import com.codelamp.template.dominio.CampoEmail;
-import com.codelamp.template.dominio.CampoEnum;
-import com.codelamp.template.dominio.CampoReferencia;
-import com.codelamp.template.dominio.CampoTexto;
-import com.codelamp.template.dominio.CampoURL;
 import com.codelamp.template.dominio.Modulo;
+import com.codelamp.template.dominio.campo.CampoAreaTexto;
+import com.codelamp.template.dominio.campo.CampoArquivo;
+import com.codelamp.template.dominio.campo.CampoDate;
+import com.codelamp.template.dominio.campo.CampoEmail;
+import com.codelamp.template.dominio.campo.CampoEnum;
+import com.codelamp.template.dominio.campo.CampoReferencia;
+import com.codelamp.template.dominio.campo.CampoTexto;
+import com.codelamp.template.dominio.campo.CampoURL;
 import com.codelamp.template.md.MestreDetalhe;
 
 

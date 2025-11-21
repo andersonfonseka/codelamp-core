@@ -2,14 +2,15 @@ package com.codelamp.cliente;
 
 import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.Acao;
-import com.codelamp.template.dominio.Campo;
-import com.codelamp.template.dominio.CampoAreaTexto;
-import com.codelamp.template.dominio.CampoDate;
-import com.codelamp.template.dominio.CampoEmail;
-import com.codelamp.template.dominio.CampoEnum;
-import com.codelamp.template.dominio.CampoReferencia;
-import com.codelamp.template.dominio.CampoTexto;
 import com.codelamp.template.dominio.Modulo;
+import com.codelamp.template.dominio.campo.Campo;
+import com.codelamp.template.dominio.campo.CampoAreaTexto;
+import com.codelamp.template.dominio.campo.CampoDate;
+import com.codelamp.template.dominio.campo.CampoDouble;
+import com.codelamp.template.dominio.campo.CampoEmail;
+import com.codelamp.template.dominio.campo.CampoEnum;
+import com.codelamp.template.dominio.campo.CampoReferencia;
+import com.codelamp.template.dominio.campo.CampoTexto;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class MainFinanceiroSimples {
@@ -36,7 +37,7 @@ public class MainFinanceiroSimples {
 
         // Detalhes do pagamento
         pagamentosConta.adicionar(new CampoDate("dataPagamento", "Data do Pagamento", 4));
-        pagamentosConta.adicionar(new Campo("double", "valorPago", "Valor Pago", 4));
+        pagamentosConta.adicionar(new CampoDouble("valorPago", "Valor Pago", 4));
         pagamentosConta.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
 
         modulo.adicionar(pagamentosConta);
@@ -55,7 +56,7 @@ public class MainFinanceiroSimples {
 
         // Detalhes do recebimento
         recebimentosConta.adicionar(new CampoDate("dataRecebimento", "Data do Recebimento", 4));
-        recebimentosConta.adicionar(new Campo("double", "valorRecebido", "Valor Recebido", 4));
+        recebimentosConta.adicionar(new CampoDouble("valorRecebido", "Valor Recebido", 4));
         recebimentosConta.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
 
         modulo.adicionar(recebimentosConta);
@@ -95,7 +96,7 @@ public class MainFinanceiroSimples {
 
         contaPagar.adicionar(new CampoTexto("descricao", "Descrição", 8));
         contaPagar.adicionar(new CampoReferencia("Fornecedor", "nome", "Fornecedor", 6));
-        contaPagar.adicionar(new Campo("double", "valorTotal", "Valor Total", 4));
+        contaPagar.adicionar(new CampoDouble("valorTotal", "Valor Total", 4));
         contaPagar.adicionar(new CampoDate("dataVencimento", "Data de Vencimento", 4));
 
         contaPagar.adicionar(new CampoEnum("status", "Status", 4,
@@ -115,7 +116,7 @@ public class MainFinanceiroSimples {
 
         contaReceber.adicionar(new CampoTexto("descricao", "Descrição", 8));
         contaReceber.adicionar(new CampoReferencia("Cliente", "nome", "Cliente", 6));
-        contaReceber.adicionar(new Campo("double", "valorTotal", "Valor Total", 4));
+        contaReceber.adicionar(new CampoDouble("valorTotal", "Valor Total", 4));
         contaReceber.adicionar(new CampoDate("dataVencimento", "Data de Vencimento", 4));
 
         contaReceber.adicionar(new CampoEnum("status", "Status", 4,

@@ -1,9 +1,9 @@
 package com.codelamp.template.md;
 
 import com.codelamp.template.crud.Entidade;
-import com.codelamp.template.dominio.Campo;
 import com.codelamp.template.dominio.EntidadeReferencia;
 import com.codelamp.template.dominio.Filtro;
+import com.codelamp.template.dominio.campo.Campo;
 
 public class MestreDetalhe extends Entidade {
 	

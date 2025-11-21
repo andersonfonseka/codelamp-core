@@ -8,7 +8,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.crud.Entidade;
-import com.codelamp.template.dominio.Campo;
+import com.codelamp.template.dominio.campo.Campo;
 
 public class GeneratorCRUD extends Generator {
 

@@ -8,7 +8,7 @@ import java.io.StringWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
-import com.codelamp.template.dominio.Campo;
+import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.lote.Lote;
 import com.codelamp.template.lote.LoteSaida;
 

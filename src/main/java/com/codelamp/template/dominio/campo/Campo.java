@@ -1,6 +1,6 @@
-package com.codelamp.template.dominio;
+package com.codelamp.template.dominio.campo;
 
-public class Campo {
+public abstract class Campo {
 
 	private String tipo;
 	

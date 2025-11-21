@@ -1,4 +1,4 @@
-package com.codelamp.template.dominio;
+package com.codelamp.template.dominio.campo;
 
 public class CampoEnum extends Campo {
 
