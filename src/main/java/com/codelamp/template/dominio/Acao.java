@@ -1,6 +1,5 @@
 package com.codelamp.template.dominio;
 
-import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class Acao {

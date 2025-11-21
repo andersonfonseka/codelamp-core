@@ -4,13 +4,13 @@ import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.Acao;
 import com.codelamp.template.dominio.Modulo;
 import com.codelamp.template.dominio.campo.CampoAreaTexto;
-import com.codelamp.template.dominio.campo.CampoArquivo;
 import com.codelamp.template.dominio.campo.CampoDate;
 import com.codelamp.template.dominio.campo.CampoEmail;
 import com.codelamp.template.dominio.campo.CampoEnum;
 import com.codelamp.template.dominio.campo.CampoReferencia;
 import com.codelamp.template.dominio.campo.CampoTexto;
 import com.codelamp.template.dominio.campo.CampoURL;
+import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.md.MestreDetalhe;
 
 
@@ -33,6 +33,14 @@ public class MainRecrutamento {
         etapasProcesso.adicionar(new CampoDate("dataMovimento", "Data da Movimentacao", 6));
 
         modulo.adicionar(etapasProcesso);
+
+        Kanban kanban = new Kanban();
+        kanban.setTitulo("Evolucao do Processo");
+        kanban.setClasse("EvolucaoProcesso");
+        kanban.setMestreDetalhe(etapasProcesso);
+        kanban.setAtributos(new String[] {"nome", "email", "telefone", "linkedin"});
+        
+        modulo.adicionar(kanban);
         
         // ===========================================================
         // === ENTIDADE: VAGA
@@ -59,15 +67,11 @@ public class MainRecrutamento {
         candidato.setClasse("Candidato");
 
         candidato.adicionar(new CampoTexto("nome", "Nome", 8));
-        candidato.adicionar(new CampoArquivo("foto", "Foto", 4));
-        candidato.adicionar(new CampoEmail("email", "E-mail", 6));
+        candidato.adicionar(new CampoEmail("email", "E-mail", 4));
         candidato.adicionar(new CampoTexto("telefone", "Telefone", 4));
-        candidato.adicionar(new CampoURL("linkedin", "LinkedIn", 12));
-        candidato.adicionar(new CampoAreaTexto("observacoes", "Observações", 12));
-        
+        candidato.adicionar(new CampoURL("linkedin", "LinkedIn", 8));
         
         modulo.adicionar(candidato);
-
 
         // ===========================================================
         // === ENTIDADE: PROCESSO SELETIVO
@@ -82,6 +86,7 @@ public class MainRecrutamento {
         processo.adicionar(new CampoEnum("status", "Status", 4, new String[]{"Novo", "Em Andamento", "Concluído"}));
         
         processo.adicionarAcao(new Acao(etapasProcesso, "Etapas", "titulo"));
+        processo.adicionarAcao(new Acao(kanban, "Kanban", "titulo"));
 
         modulo.adicionar(processo);
         
@@ -94,11 +99,11 @@ public class MainRecrutamento {
 
         usuario.adicionar(new CampoTexto("nome", "Nome", 8));
         usuario.adicionar(new CampoEmail("email", "E-mail", 6));
-
-        usuario.adicionar(new CampoEnum("perfil", "Perfil", 4,
-                new String[]{"RH", "Gestor"}));
+        usuario.adicionar(new CampoEnum("perfil", "Perfil", 4, new String[]{"RH", "Gestor"}));
 
         modulo.adicionar(usuario);
+        
+
 
         // ===========================================================
         // === GERAR SISTEMA

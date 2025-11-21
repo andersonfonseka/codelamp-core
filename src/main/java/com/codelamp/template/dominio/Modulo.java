@@ -7,10 +7,12 @@ import org.apache.velocity.VelocityContext;
 
 import com.codelamp.gerador.GeneratorCRUD;
 import com.codelamp.gerador.GeneratorCore;
+import com.codelamp.gerador.GeneratorKanban;
 import com.codelamp.gerador.GeneratorLote;
 import com.codelamp.gerador.GeneratorMD;
 import com.codelamp.gerador.GeneratorWeb;
 import com.codelamp.template.crud.Entidade;
+import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.lote.Lote;
 import com.codelamp.template.md.MestreDetalhe;
 
@@ -23,6 +25,7 @@ public class Modulo {
 	GeneratorCRUD generatorCrud = new GeneratorCRUD();
 	GeneratorMD generatorMD = new GeneratorMD();
 	GeneratorLote generatorLote = new GeneratorLote();
+	GeneratorKanban generatorKanban = new GeneratorKanban();
 
 	private Map<String, Entidade> entidades = new HashMap<>();
 
@@ -84,6 +87,12 @@ public class Modulo {
 					generatorLote.gerarEntidade(context, (Lote) entidade);
 					generatorLote.gerarController(context, (Lote) entidade);
 					generatorLote.gerarService(context, (Lote) entidade);
+				
+				} else if (entidade.getClass().getName().equals("com.codelamp.template.kanban.Kanban")) {
+
+					generatorKanban.gerarKanban(context, (Kanban) entidade);
+					generatorKanban.gerarController(context, (Kanban) entidade);
+					generatorKanban.gerarService(context, (Kanban) entidade);
 				}
 			}
 

@@ -31,7 +31,7 @@
 	
 	<div class="px-3 py-3 my-3 text-center"> 
 		<div class="col-lg-6 mx-auto"> 
-			<img src="<s:url value="/resources/images/codelamp_logo.png" />" alt="image" width="64" height="64" />
+			<img src="<s:url value="/resources/images/codelamplogo.png" />" alt="image" width="64" height="64" />
 		</div>
 
 		<h1 class="display-8 fw-bold text-body-emphasis">${projeto.titulo}</h1> 
