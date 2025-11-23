@@ -44,7 +44,7 @@ public class ${entidade.classe}Service {
 	
 	#if($campo.referencia)
 		${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
-		${entidade.classe.toLowerCase()}.setId(${entidade.classe.toLowerCase()}.get${campo.tipo}Id());
+		//${entidade.classe.toLowerCase()}.setId(${entidade.classe.toLowerCase()}.get${campo.tipo}Id());
 	#end
 	
 	#if($campo.tipo == 'Enum')
@@ -52,7 +52,8 @@ public class ${entidade.classe}Service {
 	#end
 	
 	#end
-		
+	
+		${entidade.classe.toLowerCase()}.setId(UUID.randomUUID().toString());
 		this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
 	}
 	

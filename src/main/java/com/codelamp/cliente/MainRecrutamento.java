@@ -38,8 +38,8 @@ public class MainRecrutamento {
         kanban.setTitulo("Evolucao do Processo");
         kanban.setClasse("EvolucaoProcesso");
         kanban.setMestreDetalhe(etapasProcesso);
-        kanban.setAtributos(new String[] {"nome", "email", "telefone", "linkedin"});
-        
+        kanban.setAtributos(new String[] {"candidato.nome", "candidato.email", "candidato.linkedin", "dataMovimentoStr"});
+       
         modulo.adicionar(kanban);
         
         // ===========================================================

@@ -63,9 +63,7 @@ public class MainHelpDesk {
         kanban.setMestreDetalhe(atualizacoes);
 
         // Agora usamos atributos REAIS do MestreDetalhe via atributos aninhados
-        kanban.setAtributos(new String[]{
-                "nome"
-        });
+        kanban.setAtributos(new String[]{"usuario.nome", "usuario.email", "descricao", "dataMovimentoStr"});
 
         modulo.adicionar(kanban);
 
