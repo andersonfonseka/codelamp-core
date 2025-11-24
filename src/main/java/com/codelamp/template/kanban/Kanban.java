@@ -8,12 +8,14 @@ import com.codelamp.template.md.MestreDetalhe;
 public class Kanban extends MestreDetalhe {
 
 	private MestreDetalhe mestreDetalhe;
-
+	
 	private CampoReferencia campoReferencia;
 	
 	private CampoEnum campoStatus;
 	
 	private String[] atributos;
+	
+	private boolean isMenuVisivel = false;
 
 	public MestreDetalhe getMestreDetalhe() {
 		return mestreDetalhe;
@@ -34,6 +36,14 @@ public class Kanban extends MestreDetalhe {
 	public CampoReferencia getCampoReferencia() {
 		return campoReferencia;
 	}
+	
+	public void setCampoReferencia(CampoReferencia campoReferencia) {
+		this.campoReferencia = campoReferencia;
+	}
+
+	public void setCampoStatus(CampoEnum campoStatus) {
+		this.campoStatus = campoStatus;
+	}
 
 	public CampoEnum getCampoStatus() {
 		return campoStatus;
@@ -45,6 +55,14 @@ public class Kanban extends MestreDetalhe {
 
 	public void setAtributos(String[] atributos) {
 		this.atributos = atributos;
+	}
+
+	public boolean isMenuVisivel() {
+		return isMenuVisivel;
+	}
+
+	public void setMenuVisivel(boolean isMenuVisivel) {
+		this.isMenuVisivel = isMenuVisivel;
 	}
 	
 }

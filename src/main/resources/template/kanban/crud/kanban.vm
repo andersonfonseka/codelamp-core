@@ -27,7 +27,7 @@
         border-radius: 6px;
         margin-bottom: 12px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        border-left: 5px solid #0d6efd;
+        border-left: 5px solid black;
     }
 
     .kanban-header {
@@ -52,18 +52,9 @@
 	<div class="bd-example-snippet bd-code-snippet">
 		<div class="bd-example m-0 border-0">
 
-			<h3>${mestre.titulo}</h3>
+			<h3>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</h3>
 			<hr />
-				<div class="col-6 mb-3">
-					<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
-					<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
-				</div>
 		
-		</div>
-		
-			<hr />
-
-
     		<div class="kanban-board">
 
 			<!-- Itera sobre cada coluna (key do Map) -->

@@ -7,176 +7,181 @@ import com.codelamp.template.dominio.campo.CampoArquivo;
 import com.codelamp.template.dominio.campo.CampoDate;
 import com.codelamp.template.dominio.campo.CampoDouble;
 import com.codelamp.template.dominio.campo.CampoEmail;
+import com.codelamp.template.dominio.campo.CampoEnum;
 import com.codelamp.template.dominio.campo.CampoInteiro;
 import com.codelamp.template.dominio.campo.CampoReferencia;
 import com.codelamp.template.dominio.campo.CampoTexto;
+import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class MainAlocacao {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        // ===========================================================
-        // === MÓDULO PRINCIPAL
-        // ===========================================================
-        Modulo modulo = new Modulo();
-        modulo.setTitulo("Alocação de Profissionais");
+		// ===========================================================
+		// === MÓDULO PRINCIPAL
+		// ===========================================================
+		Modulo modulo = new Modulo();
+		modulo.setTitulo("Alocação de Profissionais");
 
-        // ===========================================================
-        // === MESTRES DETALHE (sempre primeiro)
-        // ===========================================================
+		// ===========================================================
+		// === MESTRES DETALHE (sempre primeiro)
+		// ===========================================================
 
-        // -----------------------------------------------------------
-        // (1) CÉLULA → COLABORADORES
-        // -----------------------------------------------------------
-        MestreDetalhe celulaColaboradores = new MestreDetalhe();
-        celulaColaboradores.setTitulo("Colaboradores da Célula");
-        celulaColaboradores.setClasse("CelulaColaborador");
+		// -----------------------------------------------------------
+		// (1) CÉLULA → COLABORADORES
+		// -----------------------------------------------------------
+		MestreDetalhe celulaColaboradores = new MestreDetalhe();
+		celulaColaboradores.setTitulo("Colaboradores da Célula");
+		celulaColaboradores.setClasse("CelulaColaborador");
 
-        celulaColaboradores.setCampoMestre(
-                new CampoReferencia("Celula", "nome", "Célula", 6)
-        );
+		celulaColaboradores.setCampoMestre(new CampoReferencia("Celula", "nome", "Célula", 6));
 
-        celulaColaboradores.adicionar(
-                new CampoReferencia("Colaborador", "nome", "Colaborador", 6)
-        );
+		celulaColaboradores.adicionar(new CampoReferencia("Colaborador", "nome", "Colaborador", 6));
 
-        modulo.adicionar(celulaColaboradores);
+		modulo.adicionar(celulaColaboradores);
 
-        // -----------------------------------------------------------
-        // (2) CÉLULA → CLIENTES
-        // -----------------------------------------------------------
-        MestreDetalhe celulaClientes = new MestreDetalhe();
-        celulaClientes.setTitulo("Clientes da Célula");
-        celulaClientes.setClasse("CelulaCliente");
+		// -----------------------------------------------------------
+		// (2) CÉLULA → CLIENTES
+		// -----------------------------------------------------------
+		MestreDetalhe celulaClientes = new MestreDetalhe();
+		celulaClientes.setTitulo("Clientes da Célula");
+		celulaClientes.setClasse("CelulaCliente");
 
-        celulaClientes.setCampoMestre(
-                new CampoReferencia("Celula", "nome", "Célula", 6)
-        );
+		celulaClientes.setCampoMestre(new CampoReferencia("Celula", "nome", "Célula", 6));
 
-        celulaClientes.adicionar(
-                new CampoReferencia("Cliente", "nome", "Cliente", 6)
-        );
+		celulaClientes.adicionar(new CampoReferencia("Cliente", "nome", "Cliente", 6));
 
-        modulo.adicionar(celulaClientes);
+		modulo.adicionar(celulaClientes);
 
-        // -----------------------------------------------------------
-        // (3) PROJETO → ALOCAÇÃO DE PROFISSIONAIS
-        // -----------------------------------------------------------
-        MestreDetalhe alocacaoProjeto = new MestreDetalhe();
-        alocacaoProjeto.setTitulo("Alocação no Projeto");
-        alocacaoProjeto.setClasse("Alocacao");
+		// -----------------------------------------------------------
+		// (3) PROJETO → ALOCAÇÃO DE PROFISSIONAIS
+		// -----------------------------------------------------------
+		MestreDetalhe alocacaoProjeto = new MestreDetalhe();
+		alocacaoProjeto.setTitulo("Alocação no Projeto");
+		alocacaoProjeto.setClasse("AlocacaoProjeto");
 
-        alocacaoProjeto.setCampoMestre(
-                new CampoReferencia("Projeto", "nome", "Projeto", 6)
-        );
+		alocacaoProjeto.setCampoMestre(new CampoReferencia("Projeto", "nome", "Projeto", 6));
 
-        alocacaoProjeto.adicionar(
-                new CampoReferencia("Colaborador", "nome", "Colaborador", 6)
-        );
+		alocacaoProjeto.adicionar(new CampoReferencia("Colaborador", "nome", "Colaborador", 6));
 
-        alocacaoProjeto.adicionar(
-                new CampoDate("dataInicio", "Início da Alocação", 4)
-        );
+		alocacaoProjeto.adicionar(new CampoDate("dataInicio", "Início da Alocação", 4));
 
-        alocacaoProjeto.adicionar(
-                new CampoDate("dataFim", "Término da Alocação", 4)
-        );
+		alocacaoProjeto.adicionar(new CampoDate("dataFim", "Término da Alocação", 4));
 
-        alocacaoProjeto.adicionar(
-                new CampoDouble("percentual", "Percentual Alocado (%)", 4)
-        );
+		alocacaoProjeto.adicionar(new CampoDouble("percentual", "Percentual Alocado (%)", 4));
+		
+		alocacaoProjeto.adicionar(
+				new CampoEnum("status", "Status", 6, new String[] { "PLANEJADO", "ALOCADO" }));
 
-        modulo.adicionar(alocacaoProjeto);
+		modulo.adicionar(alocacaoProjeto);
 
-        // ===========================================================
-        // === ENTIDADES
-        // ===========================================================
+		// -----------------------------------------------------------
+		// (4) KANBAN DE PROJETOS
+		// -----------------------------------------------------------
+		Kanban kanbanProjetos = new Kanban();
+		kanbanProjetos.setTitulo("Kanban de Alocação");
+		kanbanProjetos.setClasse("KanbanProjetos");
 
-        // -----------------------------------------------------------
-        // CÉLULA
-        // -----------------------------------------------------------
-        Entidade celula = new Entidade();
-        celula.setTitulo("Célula");
-        celula.setClasse("Celula");
+		// o kanban é baseado no mestre-detalhe de alocação
+		kanbanProjetos.setMestreDetalhe(alocacaoProjeto);
 
-        celula.adicionar(new CampoTexto("nome", "Nome da Célula", 8));
+		// atributos exibidos no card
+		kanbanProjetos.setAtributos(new String[] { "colaborador.nome", "percentual", "dataInicioStr", "dataFimStr" });
 
-        celula.adicionarAcao(new Acao(celulaColaboradores, "Colaboradores", "nome"));
-        celula.adicionarAcao(new Acao(celulaClientes, "Clientes", "nome"));
+		modulo.adicionar(kanbanProjetos);
 
-        modulo.adicionar(celula);
+		// ===========================================================
+		// === ENTIDADES
+		// ===========================================================
 
-        // -----------------------------------------------------------
-        // ÁREA
-        // -----------------------------------------------------------
-        Entidade area = new Entidade();
-        area.setTitulo("Área");
-        area.setClasse("Area");
+		// -----------------------------------------------------------
+		// CÉLULA
+		// -----------------------------------------------------------
+		Entidade celula = new Entidade();
+		celula.setTitulo("Célula");
+		celula.setClasse("Celula");
 
-        area.adicionar(new CampoTexto("nome", "Nome da Área", 8));
+		celula.adicionar(new CampoTexto("nome", "Nome da Célula", 8));
 
-        modulo.adicionar(area);
+		celula.adicionarAcao(new Acao(celulaColaboradores, "Colaboradores", "nome"));
+		celula.adicionarAcao(new Acao(celulaClientes, "Clientes", "nome"));
 
-        // -----------------------------------------------------------
-        // CARGO
-        // -----------------------------------------------------------
-        Entidade cargo = new Entidade();
-        cargo.setTitulo("Cargo");
-        cargo.setClasse("Cargo");
+		modulo.adicionar(celula);
 
-        cargo.adicionar(new CampoTexto("titulo", "Título do Cargo", 8));
+		// -----------------------------------------------------------
+		// ÁREA
+		// -----------------------------------------------------------
+		Entidade area = new Entidade();
+		area.setTitulo("Área");
+		area.setClasse("Area");
 
-        // relação: cargo pertence a uma área
-        cargo.adicionar(new CampoReferencia("Area", "nome", "Área", 6));
+		area.adicionar(new CampoTexto("nome", "Nome da Área", 8));
 
-        modulo.adicionar(cargo);
+		modulo.adicionar(area);
 
-        // -----------------------------------------------------------
-        // COLABORADOR
-        // -----------------------------------------------------------
-        Entidade colaborador = new Entidade();
-        colaborador.setTitulo("Colaborador");
-        colaborador.setClasse("Colaborador");
+		// -----------------------------------------------------------
+		// CARGO
+		// -----------------------------------------------------------
+		Entidade cargo = new Entidade();
+		cargo.setTitulo("Cargo");
+		cargo.setClasse("Cargo");
 
-        colaborador.adicionar(new CampoTexto("nome", "Nome", 8));
-        colaborador.adicionar(new CampoReferencia("Cargo", "titulo", "Cargo", 6));
-        colaborador.adicionar(new CampoEmail("email", "E-mail", 6));
-        colaborador.adicionar(new CampoInteiro("matricula", "Matrícula", 4));
-        colaborador.adicionar(new CampoArquivo("foto", "Foto", 6));
+		cargo.adicionar(new CampoTexto("titulo", "Título do Cargo", 8));
+		cargo.adicionar(new CampoReferencia("Area", "nome", "Área", 6));
 
-        modulo.adicionar(colaborador);
+		modulo.adicionar(cargo);
 
-        // -----------------------------------------------------------
-        // CLIENTE
-        // -----------------------------------------------------------
-        Entidade cliente = new Entidade();
-        cliente.setTitulo("Cliente");
-        cliente.setClasse("Cliente");
+		// -----------------------------------------------------------
+		// COLABORADOR
+		// -----------------------------------------------------------
+		Entidade colaborador = new Entidade();
+		colaborador.setTitulo("Colaborador");
+		colaborador.setClasse("Colaborador");
 
-        cliente.adicionar(new CampoTexto("nome", "Nome do Cliente", 8));
+		colaborador.adicionar(new CampoTexto("nome", "Nome", 8));
+		colaborador.adicionar(new CampoReferencia("Cargo", "titulo", "Cargo", 6));
+		colaborador.adicionar(new CampoEmail("email", "E-mail", 6));
+		colaborador.adicionar(new CampoInteiro("matricula", "Matrícula", 4));
+		colaborador.adicionar(new CampoArquivo("foto", "Foto", 6));
 
-        modulo.adicionar(cliente);
+		modulo.adicionar(colaborador);
 
-        // -----------------------------------------------------------
-        // PROJETO
-        // -----------------------------------------------------------
-        Entidade projeto = new Entidade();
-        projeto.setTitulo("Projeto");
-        projeto.setClasse("Projeto");
+		// -----------------------------------------------------------
+		// CLIENTE
+		// -----------------------------------------------------------
+		Entidade cliente = new Entidade();
+		cliente.setTitulo("Cliente");
+		cliente.setClasse("Cliente");
 
-        projeto.adicionar(new CampoTexto("nome", "Nome do Projeto", 8));
-        projeto.adicionar(new CampoReferencia("Cliente", "nome", "Cliente", 6));
-        projeto.adicionar(new CampoDate("dataInicio", "Data de Início", 4));
-        projeto.adicionar(new CampoDate("dataFim", "Data de Término", 4));
+		cliente.adicionar(new CampoTexto("nome", "Nome do Cliente", 8));
+		cliente.adicionar(new CampoReferencia("Celula", "nome", "Célula", 6));
 
-        projeto.adicionarAcao(new Acao(alocacaoProjeto, "Alocações", "nome"));
+		modulo.adicionar(cliente);
 
-        modulo.adicionar(projeto);
+		// -----------------------------------------------------------
+		// PROJETO
+		// -----------------------------------------------------------
+		Entidade projeto = new Entidade();
+		projeto.setTitulo("Projeto");
+		projeto.setClasse("Projeto");
 
-        // ===========================================================
-        // === GERAR
-        // ===========================================================
-        modulo.gerar();
-    }
+		projeto.adicionar(new CampoTexto("nome", "Nome do Projeto", 8));
+		projeto.adicionar(new CampoReferencia("Cliente", "nome", "Cliente", 6));
+		projeto.adicionar(new CampoDate("dataInicio", "Data de Início", 4));
+		projeto.adicionar(new CampoDate("dataFim", "Data de Término", 4));
+
+		projeto.adicionar(
+				new CampoEnum("status", "Status", 6, new String[] { "PLANEJADO", "EM_ANDAMENTO", "FINALIZADO" }));
+
+		projeto.adicionarAcao(new Acao(alocacaoProjeto, "Alocações", "nome"));
+		projeto.adicionarAcao(new Acao(kanbanProjetos, "Kanban", "nome"));
+
+		modulo.adicionar(projeto);
+
+		// ===========================================================
+		// === GERAR
+		// ===========================================================
+		modulo.gerar();
+	}
 }

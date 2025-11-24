@@ -1,0 +1,43 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe};
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe}Service;
+
+@Service
+public class ${entidade.classe}Service {
+
+	@Autowired
+	private ${entidade.entidadeReferencia.classe}Service ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service;
+
+	public Map<String, List<${entidade.entidadeReferencia.classe}>> listar() {
+
+		Map<String, List<${entidade.entidadeReferencia.classe}>> kanban = new HashMap<>();
+		
+		List<${entidade.entidadeReferencia.classe}> list = this.${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.listar();
+		
+		for (${entidade.entidadeReferencia.classe} ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)} : list) {
+			
+			if (!kanban.containsKey(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.getStatus())) {
+				List<${entidade.entidadeReferencia.classe}> lst = new ArrayList<>();
+				lst.add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
+				kanban.put(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}(), lst);	
+			} else {
+				kanban.get(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
+			}
+		}
+		
+		return kanban;
+	}
+
+}

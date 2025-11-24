@@ -7,6 +7,7 @@ import com.codelamp.template.dominio.Acao;
 import com.codelamp.template.dominio.EntidadeReferencia;
 import com.codelamp.template.dominio.Modulo;
 import com.codelamp.template.dominio.campo.Campo;
+import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class Entidade {
@@ -81,6 +82,10 @@ public class Entidade {
 	
 	public boolean isMestre() {
 		return this instanceof MestreDetalhe;
+	}
+	
+	public boolean isKanban() {
+		return this instanceof Kanban;
 	}
 	
 }
