@@ -25,10 +25,8 @@ public class GeneratorMD extends Generator {
 
 		String path = "c:/temp/codigofonte/frontend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + mestre.getNomePasta() + ".jsp"));
-		fw.write(stWriter.toString().replace("*", "$"));
-		fw.close();
+		
+		writeToDisk(stWriter, path, mestre.getNomePasta() + ".jsp");
 
 	}
 
@@ -43,10 +41,8 @@ public class GeneratorMD extends Generator {
 
 		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + mestre.getClasse() + ".java"));
-		fw.write(stWriter.toString());
-		fw.close();
+		
+		writeToDisk(stWriter, path, mestre.getClasse() + ".java");
 
 	}
 
@@ -62,10 +58,8 @@ public class GeneratorMD extends Generator {
 		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 
-		FileWriter fw = new FileWriter(new File(path + mestre.getClasse() + "Controller.java"));
-		fw.write(stWriter.toString());
-		fw.close();
-
+		writeToDisk(stWriter, path, mestre.getClasse() + "Controller.java");
+		
 	}
 
 	public void gerarService(VelocityContext context, MestreDetalhe mestre) throws Exception, IOException {
@@ -79,10 +73,8 @@ public class GeneratorMD extends Generator {
 
 		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + mestre.getClasse() + "Service.java"));
-		fw.write(stWriter.toString());
-		fw.close();
+		
+		writeToDisk(stWriter, path, mestre.getClasse() + "Service.java");
 
 	}
 	
@@ -97,10 +89,8 @@ public class GeneratorMD extends Generator {
 
 		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + mestre.getClasse() + "Repository.java"));
-		fw.write(stWriter.toString());
-		fw.close();
+		
+		writeToDisk(stWriter, path, mestre.getClasse() + "Repository.java");
 
 	}
 
@@ -128,5 +118,4 @@ public class GeneratorMD extends Generator {
 		}
 
 	}
-
 }

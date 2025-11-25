@@ -10,6 +10,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
+import com.codelamp.beautifier.BeautifierPro;
+
 public class Generator {
 
 	private VelocityEngine engine;
@@ -37,7 +39,9 @@ public class Generator {
 
 	public void writeToDisk(StringWriter stWriter, String path, String fileName) throws IOException {
 		FileWriter fw = new FileWriter(new File(path + fileName));
-		fw.write(stWriter.toString().replace("*", "$"));
+		
+		String valor = stWriter.toString().replace("*", "$");
+		fw.write(BeautifierPro.beautify(valor));
 		fw.close();
 	}
 
