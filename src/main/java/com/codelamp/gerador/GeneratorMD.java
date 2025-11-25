@@ -85,6 +85,24 @@ public class GeneratorMD extends Generator {
 		fw.close();
 
 	}
+	
+	public void gerarRepository(VelocityContext context, MestreDetalhe mestre) throws Exception, IOException {
+
+		Template template = getEngine().getTemplate("template/md/repositoryMD.vm");
+
+		context.put("entidade", mestre);
+
+		StringWriter stWriter = new StringWriter();
+		template.merge(context, stWriter);
+
+		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		new File(path).mkdirs();
+
+		FileWriter fw = new FileWriter(new File(path + mestre.getClasse() + "Repository.java"));
+		fw.write(stWriter.toString());
+		fw.close();
+
+	}
 
 	public void gerarDominio(VelocityContext context, MestreDetalhe mestre) throws Exception, IOException {
 

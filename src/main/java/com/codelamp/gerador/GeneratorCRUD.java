@@ -83,6 +83,22 @@ public class GeneratorCRUD extends Generator {
 		writeToDisk(stWriter, path, entidade.getClasse() + "Service.java");
 
 	}
+	
+	public void gerarRepository(VelocityContext context, Entidade entidade) throws Exception, IOException {
+
+		Template template = getEngine().getTemplate("template/crud/repository.vm");
+
+		context.put("entidade", entidade);
+
+		StringWriter stWriter = new StringWriter();
+		template.merge(context, stWriter);
+
+		String path = "c:/temp/codigofonte/backend/" + entidade.getNomePasta() + "/";
+		new File(path).mkdirs();
+		
+		writeToDisk(stWriter, path, entidade.getClasse() + "Repository.java");
+
+	}
 
 	public void gerarList(VelocityContext context, Entidade entidade) throws Exception, IOException {
 

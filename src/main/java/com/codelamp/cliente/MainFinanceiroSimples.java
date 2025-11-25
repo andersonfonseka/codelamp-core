@@ -3,7 +3,6 @@ package com.codelamp.cliente;
 import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.Acao;
 import com.codelamp.template.dominio.Modulo;
-import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.dominio.campo.CampoAreaTexto;
 import com.codelamp.template.dominio.campo.CampoDate;
 import com.codelamp.template.dominio.campo.CampoDouble;

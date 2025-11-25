@@ -1,12 +1,6 @@
 package com.example.codelamp.${entidade.classe.toLowerCase()};
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +16,7 @@ import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
 @Service
 public class ${entidade.classe}Service {
 
-	private final Map<String, ${entidade.classe}> ${entidade.classe.toLowerCase()}s = new HashMap<String, ${entidade.classe}>();
+	private ${entidade.classe}Repository ${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository;
 	
     @Autowired
     private ${entidade.entidadeReferencia.classe}Service ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service;
@@ -34,6 +28,9 @@ public class ${entidade.classe}Service {
 	#end
 #end
 
+	public ${entidade.classe}Service(${entidade.classe}Repository ${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository){
+		this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository = ${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository;
+	}
 	
 	public void salvar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
 	
@@ -44,7 +41,6 @@ public class ${entidade.classe}Service {
 	
 	#if($campo.referencia)
 		${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
-		//${entidade.classe.toLowerCase()}.setId(${entidade.classe.toLowerCase()}.get${campo.tipo}Id());
 	#end
 	
 	#if($campo.tipo == 'Enum')
@@ -53,73 +49,46 @@ public class ${entidade.classe}Service {
 	
 	#end
 	
-		${entidade.classe.toLowerCase()}.setId(UUID.randomUUID().toString());
-		this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
+		this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.salvar(${entidade.classe.toLowerCase()});
 	}
 	
 	public void editar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
-		if (${entidade.classe.toLowerCase()}s.containsKey(${entidade.classe.toLowerCase()}.getId())) {
 
-	#foreach($campo in ${entidade.filtro.campos} )
-	#if($campo.referencia)
-		${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
-	#end
+		#foreach($campo in ${entidade.filtro.campos} )
+			#if($campo.referencia)
+				${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
+			#end
+			#if($campo.tipo == 'Enum')
+				${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
+			#end
+		#end
 
+		#foreach($campo in ${entidade.campos} )
+			#if($campo.referencia)
+				${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
+			#end
+			#if($campo.tipo == 'Enum')
+				${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
+			#end
+		#end
 
-	#if($campo.tipo == 'Enum')
-		${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
-	#end
-
-	#end
-	
-	#foreach($campo in ${entidade.campos} )
-	#if($campo.referencia)
-		${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
-	#end
-
-
-	#if($campo.tipo == 'Enum')
-		${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
-	#end
-
-	#end
-	
-
-
-			this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
-
-    	}
+		this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.editar(${entidade.classe.toLowerCase()});
 	}
 	
 	public ${entidade.classe} obter(String id) {
-	
-		${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
-		${entidade.classe.toLowerCase()}.setId(id);
-    			
-    	return this.${entidade.classe.toLowerCase()}s.get(${entidade.classe.toLowerCase()}.getId());
+		return this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.obter(id);	
 	}
 
 	public void remover(String id) {
-
-		${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
-		${entidade.classe.toLowerCase()}.setId(id);
-		
-    	if (${entidade.classe.toLowerCase()}s.containsKey(${entidade.classe.toLowerCase()}.getId())) {
-    		${entidade.classe.toLowerCase()}s.remove(${entidade.classe.toLowerCase()}.getId());
-    	}
+		this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.remover(id);	
 	}
 	
 	public List<${entidade.classe}> listar(){
-		return new ArrayList<${entidade.classe}>(this.${entidade.classe.toLowerCase()}s.values());
+		return this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.listar();	
 	}
 	
 	public List<${entidade.classe}> listar(String id) {
-		
-		List<${entidade.classe}> list = this.${entidade.classe.toLowerCase()}s.values()
-												  .stream()
-												  .filter(x -> Objects.equals(x.get${entidade.campoMestre.tipo}Id(), id))
-												  .collect(Collectors.toList());
-		return list;
+		return this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.listar(id);	
 	}
 	
 }

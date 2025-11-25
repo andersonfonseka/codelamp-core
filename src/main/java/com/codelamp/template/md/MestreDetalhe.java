@@ -2,7 +2,6 @@ package com.codelamp.template.md;
 
 import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.EntidadeReferencia;
-import com.codelamp.template.dominio.Filtro;
 import com.codelamp.template.dominio.campo.Campo;
 
 public class MestreDetalhe extends Entidade {
@@ -27,6 +26,7 @@ public class MestreDetalhe extends Entidade {
 		this.campoMestre = campoMestre;
 	}
 
+	@Override
 	public String getNomePasta() {
 		return getClasse().replace(" ", "").toLowerCase();
 	}

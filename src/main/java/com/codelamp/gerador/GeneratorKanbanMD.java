@@ -9,11 +9,10 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.kanban.Kanban;
-import com.codelamp.template.md.MestreDetalhe;
 
 public class GeneratorKanbanMD extends Generator {
 
-	public void gerarKanban(VelocityContext context, Kanban kanban) throws Exception, IOException {
+	public void gerarKanban(VelocityContext context, Kanban kanban) throws IOException {
 
 		Template template = getEngine().getTemplate("template/kanban/md/kanban.vm");
 
@@ -32,7 +31,7 @@ public class GeneratorKanbanMD extends Generator {
 
 	}
 
-	public void gerarController(VelocityContext context, Kanban kanban) throws Exception, IOException {
+	public void gerarController(VelocityContext context, Kanban kanban) throws IOException {
 
 		Template template = getEngine().getTemplate("template/kanban/md/controllerKanban.vm");
 
@@ -50,7 +49,7 @@ public class GeneratorKanbanMD extends Generator {
 
 	}
 	
-	public void gerarService(VelocityContext context, Kanban kanban) throws Exception, IOException {
+	public void gerarService(VelocityContext context, Kanban kanban) throws IOException {
 
 		Template template = getEngine().getTemplate("template/kanban/md/serviceKanban.vm");
 

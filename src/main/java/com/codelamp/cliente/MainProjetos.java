@@ -39,23 +39,23 @@ public class MainProjetos {
 	                new CampoReferencia("Projeto", "nome", "Projeto", 6)
 	        );
 
-	        projetoTarefas.adicionar(new CampoTexto("titulo", "Título da Tarefa", 8));
-	        projetoTarefas.adicionar(new CampoTexto("descricao", "Descrição", 12));
+	        projetoTarefas.adicionar(new CampoTexto("titulo", "Título da Tarefa", 6));
+	        projetoTarefas.adicionar(new CampoTexto("descricao", "Descrição", 6));
 	        projetoTarefas.adicionar(new CampoReferencia("Recurso", "nome", "Responsável", 6));
 
 	        projetoTarefas.adicionar(
-	                new CampoEnum("prioridade", "Prioridade", 4,
+	                new CampoEnum("prioridade", "Prioridade", 6,
 	                        new String[]{"BAIXA", "MEDIA", "ALTA", "CRITICA"})
 	        );
 
 	        projetoTarefas.adicionar(
-	                new CampoEnum("status", "Status", 4,
+	                new CampoEnum("status", "Status", 6,
 	                        new String[]{"BACKLOG", "EM_ANDAMENTO", "EM_REVISAO", "CONCLUIDA"})
 	        );
 
 	        projetoTarefas.adicionar(new CampoDate("dataInicio", "Data de Início", 4));
 	        projetoTarefas.adicionar(new CampoDate("dataFim", "Data de Término", 4));
-	        projetoTarefas.adicionar(new CampoInteiro("esforcoHoras", "Esforço (h)", 3));
+	        projetoTarefas.adicionar(new CampoInteiro("esforcoHoras", "Esforço (h)", 4));
 
 	        modulo.adicionar(projetoTarefas);
 

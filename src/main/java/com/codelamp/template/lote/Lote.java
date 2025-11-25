@@ -11,8 +11,6 @@ public class Lote extends Entidade {
 	
 	private LoteSaida saida = new LoteSaida();
 	
-	private boolean camposFiltro = true;
-	
 	public Filtro getFiltro() {
 		return filtro;
 	}
@@ -39,6 +37,7 @@ public class Lote extends Entidade {
 		this.saida = saida;
 	}
 
+	@Override
 	public String getNomePasta() {
 		return getClasse().replace(" ", "").toLowerCase();
 	}

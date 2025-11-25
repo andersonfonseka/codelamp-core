@@ -9,11 +9,10 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.kanban.Kanban;
-import com.codelamp.template.md.MestreDetalhe;
 
 public class GeneratorKanban extends Generator {
 
-	public void gerarKanban(VelocityContext context, Kanban kanban) throws Exception, IOException {
+	public void gerarKanban(VelocityContext context, Kanban kanban) throws IOException {
 
 		Template template = getEngine().getTemplate("template/kanban/crud/kanban.vm");
 

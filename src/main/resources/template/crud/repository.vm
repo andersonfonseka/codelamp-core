@@ -1,0 +1,48 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ${entidade.classe}Repository {
+
+	private final Map<String, ${entidade.classe}> ${entidade.classe.toLowerCase()}s = new HashMap<>();
+	
+	public void salvar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
+		${entidade.classe.toLowerCase()}.setId(UUID.randomUUID().toString());
+		this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
+	}
+	
+	public void editar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
+		if (${entidade.classe.toLowerCase()}s.containsKey(${entidade.classe.toLowerCase()}.getId())) {
+			this.${entidade.classe.toLowerCase()}s.put(${entidade.classe.toLowerCase()}.getId(), ${entidade.classe.toLowerCase()});
+    	}
+	}
+	
+	public ${entidade.classe} obter(String id) {
+		${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
+		${entidade.classe.toLowerCase()}.setId(id);
+    	return this.${entidade.classe.toLowerCase()}s.get(${entidade.classe.toLowerCase()}.getId());
+	}
+
+	public void remover(String id) {
+
+		${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
+		${entidade.classe.toLowerCase()}.setId(id);
+		
+    	if (${entidade.classe.toLowerCase()}s.containsKey(${entidade.classe.toLowerCase()}.getId())) {
+    		${entidade.classe.toLowerCase()}s.remove(${entidade.classe.toLowerCase()}.getId());
+    	}
+	}
+	
+	public List<${entidade.classe}> listar(){
+		return new ArrayList<>(this.${entidade.classe.toLowerCase()}s.values());
+	}
+	
+}

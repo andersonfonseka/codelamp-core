@@ -70,6 +70,7 @@ public class Modulo {
 					generatorCrud.gerarDominio(context, entidade);
 					generatorCrud.gerarController(context, entidade);
 					generatorCrud.gerarService(context, entidade);
+					generatorCrud.gerarRepository(context, entidade);
 					generatorCrud.gerarList(context, entidade);
 					generatorCrud.gerarForm(context, entidade);
 					generatorCrud.gerarFormEditar(context, entidade);
@@ -81,6 +82,7 @@ public class Modulo {
 					generatorMD.gerarEntidade(context, (MestreDetalhe) entidade);
 					generatorMD.gerarController(context, (MestreDetalhe) entidade);
 					generatorMD.gerarService(context, (MestreDetalhe) entidade);
+					generatorMD.gerarRepository(context, (MestreDetalhe) entidade);
 
 				} else if (entidade.getClass().getName().equals("com.codelamp.template.lote.Lote")) {
 
