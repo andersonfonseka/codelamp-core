@@ -22,7 +22,10 @@
 <body>
 	<main class="d-flex flex-nowrap">
 		<jsp:include page="sidebar.jsp" />
-		<jsp:include page="${pageContent}" />
+
+		<div class="container-fluid ms-2 mt-2">
+			<jsp:include page="${pageContent}" />
+		</div>	
 	</main>
 </body>
 
