@@ -8,17 +8,16 @@ import com.codelamp.template.dominio.campo.*;
 import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.md.MestreDetalhe;
 
-public class MainAcademico {
+public class MainAcademico2 {
 
     public static void main(String[] args) {
 
         Modulo modulo = new Modulo();
         modulo.setTitulo("Gestão Acadêmica");
-
+        
         // ===========================================================
-        // ===================== MESTRE-DETALHES ======================
+        // MESTRE-DETALHE
         // ===========================================================
-
 
         // -----------------------------------------------------------
         // ALUNO → SOLICITAÇÕES
@@ -40,26 +39,6 @@ public class MainAcademico {
 
         modulo.adicionar(alunoSolicitacoes);
 
-     // -----------------------------------------------------------
-        // LIVRO → EMPRÉSTIMOS
-        // -----------------------------------------------------------
-        MestreDetalhe livroEmprestimos = new MestreDetalhe();
-        livroEmprestimos.setTitulo("Empréstimos");
-        livroEmprestimos.setClasse("EmprestimoLivro");
-
-        livroEmprestimos.setCampoMestre(
-                new CampoReferencia("Livro", "titulo", "Livro", 8)
-        );
-
-        livroEmprestimos.adicionar(new CampoReferencia("Aluno", "nome", "Aluno", 8));
-        livroEmprestimos.adicionar(new CampoDate("dataEmprestimo", "Empréstimo", 4));
-        livroEmprestimos.adicionar(new CampoDate("dataPrevistaDevolucao", "Prev. Devolução", 4));
-        livroEmprestimos.adicionar(new CampoDate("dataDevolucao", "Devolução", 4));
-        livroEmprestimos.adicionar(new CampoEnum("status", "Status", 4,
-                new String[]{"EM_ANDAMENTO", "DEVOLVIDO", "ATRASADO"}));
-
-        modulo.adicionar(livroEmprestimos);
-
 
         // -----------------------------------------------------------
         // CURSO → DISCIPLINAS DA MATRIZ
@@ -76,7 +55,6 @@ public class MainAcademico {
         cursoDisciplinas.adicionar(new CampoInteiro("periodo", "Período/Série", 4));
 
         modulo.adicionar(cursoDisciplinas);
-
 
 
         // -----------------------------------------------------------
@@ -98,6 +76,46 @@ public class MainAcademico {
         modulo.adicionar(disciplinaConteudo);
 
 
+        // -----------------------------------------------------------
+        // CONTEÚDO PROGRAMÁTICO → AULAS MINISTRADAS
+        // (Agora vinculando também a TURMA)
+        // -----------------------------------------------------------
+        MestreDetalhe conteudoAulas = new MestreDetalhe();
+        conteudoAulas.setTitulo("Aulas Ministradas");
+        conteudoAulas.setClasse("AulaMinistrada");
+
+        conteudoAulas.setCampoMestre(
+                new CampoReferencia("ConteudoProgramatico", "titulo", "Conteúdo", 8)
+        );
+
+        // Turma da aula (para saber em qual turma o conteúdo foi dado)
+        conteudoAulas.adicionar(new CampoReferencia("Turma", "nome", "Turma", 6));
+        conteudoAulas.adicionar(new CampoDate("data", "Data da Aula", 4));
+        conteudoAulas.adicionar(new CampoAreaTexto("descricao", "Descrição da Aula", 12));
+
+        modulo.adicionar(conteudoAulas);
+
+        // -----------------------------------------------------------
+        // AULA MINISTRADA → FREQUÊNCIA DE ALUNOS
+        // -----------------------------------------------------------
+        MestreDetalhe aulaFrequencias = new MestreDetalhe();
+        aulaFrequencias.setTitulo("Frequência dos Alunos");
+        aulaFrequencias.setClasse("AulaFrequencia");
+
+        aulaFrequencias.setCampoMestre(
+                new CampoReferencia("AulaMinistrada", "data", "Aula", 6)
+        );
+
+        // SOMENTE alunos da turma (conceitualmente via TurmaAluno)
+        aulaFrequencias.adicionar(
+                new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno da Turma", 8)
+        );
+
+        aulaFrequencias.adicionar(new CampoEnum("presenca", "Presença", 4,
+                new String[]{"PRESENTE", "AUSENTE", "JUSTIFICADA"}));
+        aulaFrequencias.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
+
+        modulo.adicionar(aulaFrequencias);
 
         // -----------------------------------------------------------
         // TURMA → ALUNOS
@@ -117,7 +135,6 @@ public class MainAcademico {
         modulo.adicionar(turmaAlunos);
 
 
-
         // -----------------------------------------------------------
         // TURMA → DISCIPLINAS DA TURMA
         // -----------------------------------------------------------
@@ -131,94 +148,56 @@ public class MainAcademico {
 
         turmaDisciplinas.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 8));
         turmaDisciplinas.adicionar(new CampoReferencia("Professor", "nome", "Professor", 6));
-        turmaDisciplinas.adicionar(new CampoInteiro("cargaHoraria", "Carga Horária", 4));
+        turmaDisciplinas.adicionar(new CampoInteiro("cargaHoraria", "Carga Horária (h)", 4));
         turmaDisciplinas.adicionar(new CampoTexto("observacoes", "Observações", 12));
 
         modulo.adicionar(turmaDisciplinas);
 
 
+        // -----------------------------------------------------------
+        // LIVRO → EMPRÉSTIMOS
+        // -----------------------------------------------------------
+        MestreDetalhe livroEmprestimos = new MestreDetalhe();
+        livroEmprestimos.setTitulo("Empréstimos");
+        livroEmprestimos.setClasse("EmprestimoLivro");
+
+        livroEmprestimos.setCampoMestre(
+                new CampoReferencia("Livro", "titulo", "Livro", 8)
+        );
+
+        livroEmprestimos.adicionar(new CampoReferencia("Aluno", "nome", "Aluno", 8));
+        livroEmprestimos.adicionar(new CampoDate("dataEmprestimo", "Empréstimo", 4));
+        livroEmprestimos.adicionar(new CampoDate("dataPrevistaDevolucao", "Prev. Devolução", 4));
+        livroEmprestimos.adicionar(new CampoDate("dataDevolucao", "Devolução", 4));
+        livroEmprestimos.adicionar(new CampoEnum("status", "Status", 4,
+                new String[]{"EM_ANDAMENTO", "DEVOLVIDO", "ATRASADO"}));
+
+        modulo.adicionar(livroEmprestimos);
+
 
         // -----------------------------------------------------------
-        // TRABALHO → NOTAS
+        // TRABALHO → NOTAS (somente alunos da turma)
         // -----------------------------------------------------------
         MestreDetalhe trabalhoNotas = new MestreDetalhe();
         trabalhoNotas.setTitulo("Notas do Trabalho");
         trabalhoNotas.setClasse("TrabalhoNota");
 
         trabalhoNotas.setCampoMestre(
-                new CampoReferencia("TurmaTrabalho", "descricao", "Trabalho", 8)
+                new CampoReferencia("Trabalho", "titulo", "Trabalho", 8)
         );
 
-        trabalhoNotas.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno da Turma", 8));
+        trabalhoNotas.adicionar(
+                new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno da Turma", 8)
+        );
+
         trabalhoNotas.adicionar(new CampoInteiro("nota", "Nota", 4));
         trabalhoNotas.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
 
         modulo.adicionar(trabalhoNotas);
 
-        
-     // -----------------------------------------------------------
-        // TURMA → TRABALHOS (correto!)
-        // -----------------------------------------------------------
-        MestreDetalhe turmaTrabalhos = new MestreDetalhe();
-        turmaTrabalhos.setTitulo("Trabalhos da Turma");
-        turmaTrabalhos.setClasse("TurmaTrabalho");
-
-        turmaTrabalhos.setCampoMestre(
-                new CampoReferencia("Turma", "nome", "Turma", 6)
-        );
-
-        turmaTrabalhos.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 8));
-        turmaTrabalhos.adicionar(new CampoTexto("titulo", "Título", 8));
-        turmaTrabalhos.adicionar(new CampoDate("dataEntrega", "Entrega", 4));
-        turmaTrabalhos.adicionar(new CampoAreaTexto("descricao", "Descrição", 12));
-        turmaTrabalhos.adicionar(new CampoEnum("status", "Status", 4,
-                new String[]{"ABERTO", "ENTREGUE", "ATRASADO"}));
-        
-        turmaTrabalhos.adicionarAcao(new Acao(trabalhoNotas, "Notas", "descricao"));
-
-        modulo.adicionar(turmaTrabalhos);
-
-
-        // -----------------------------------------------------------
-        // AULA MINISTRADA → FREQUÊNCIA
-        // -----------------------------------------------------------
-        MestreDetalhe aulaFrequencias = new MestreDetalhe();
-        aulaFrequencias.setTitulo("Frequência dos Alunos");
-        aulaFrequencias.setClasse("AulaFrequencia");
-
-        aulaFrequencias.setCampoMestre(
-                new CampoReferencia("TurmaAulaMinistrada", "descricao", "Aula", 6)
-        );
-
-        aulaFrequencias.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno", 8));
-        aulaFrequencias.adicionar(new CampoEnum("presenca", "Presença", 4,
-                new String[]{"PRESENTE", "AUSENTE", "JUSTIFICADA"}));
-        aulaFrequencias.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
-
-        modulo.adicionar(aulaFrequencias);
-
-        // -----------------------------------------------------------
-        // TURMA → AULAS MINISTRADAS (correto!)
-        // -----------------------------------------------------------
-        MestreDetalhe turmaAulas = new MestreDetalhe();
-        turmaAulas.setTitulo("Aulas Ministradas");
-        turmaAulas.setClasse("TurmaAulaMinistrada");
-
-        turmaAulas.setCampoMestre(
-                new CampoReferencia("Turma", "nome", "Turma", 6)
-        );
-
-        turmaAulas.adicionar(new CampoReferencia("ConteudoProgramatico", "titulo", "Conteúdo", 8));
-        turmaAulas.adicionar(new CampoDate("data", "Data da Aula", 4));
-        turmaAulas.adicionar(new CampoAreaTexto("descricao", "Descrição da Aula", 12));
-        
-        turmaAulas.adicionarAcao(new Acao(aulaFrequencias, "Frequencia", "descricao"));
-
-        modulo.adicionar(turmaAulas);
-
 
         // ===========================================================
-        // ========================= KANBAN ==========================
+        // KANBAN DE SOLICITAÇÕES
         // ===========================================================
 
         Kanban kanbanSolicitacoes = new Kanban();
@@ -239,12 +218,26 @@ public class MainAcademico {
         modulo.adicionar(kanbanSolicitacoes);
 
 
-
         // ===========================================================
-        // ========================== ENTIDADES =======================
+        // ENTIDADES
         // ===========================================================
 
+        // AULA MINISTRADA (agora com TURMA)
+        Entidade aulaMinistrada = new Entidade();
+        aulaMinistrada.setTitulo("Aula Ministrada");
+        aulaMinistrada.setClasse("AulaMinistrada");
+
+        aulaMinistrada.adicionar(new CampoReferencia("Turma", "nome", "Turma", 6));
+        aulaMinistrada.adicionar(new CampoReferencia("ConteudoProgramatico", "titulo", "Conteúdo", 8));
+        aulaMinistrada.adicionar(new CampoDate("data", "Data da Aula", 4));
+        aulaMinistrada.adicionar(new CampoAreaTexto("descricao", "Descrição da Aula", 12));
+        
+        aulaMinistrada.adicionarAcao(new Acao(aulaFrequencias, "Frequência", "data"));
+        modulo.adicionar(aulaMinistrada);
+        
+        // ----------------------------
         // CURSO
+        // ----------------------------
         Entidade curso = new Entidade();
         curso.setTitulo("Curso");
         curso.setClasse("Curso");
@@ -261,8 +254,9 @@ public class MainAcademico {
         modulo.adicionar(curso);
 
 
-
+        // ----------------------------
         // DISCIPLINA
+        // ----------------------------
         Entidade disciplina = new Entidade();
         disciplina.setTitulo("Disciplina");
         disciplina.setClasse("Disciplina");
@@ -273,12 +267,13 @@ public class MainAcademico {
         disciplina.adicionar(new CampoEnum("tipo", "Tipo", 4,
                 new String[]{"OBRIGATORIA", "OPTATIVA"}));
 
-        disciplina.adicionarAcao(new Acao(disciplinaConteudo, "Conteúdo", "nome"));
+        disciplina.adicionarAcao(new Acao(disciplinaConteudo, "Conteúdo Programático", "nome"));
         modulo.adicionar(disciplina);
 
 
-
+        // ----------------------------
         // PROFESSOR
+        // ----------------------------
         Entidade professor = new Entidade();
         professor.setTitulo("Professor");
         professor.setClasse("Professor");
@@ -294,8 +289,9 @@ public class MainAcademico {
         modulo.adicionar(professor);
 
 
-
+        // ----------------------------
         // ALUNO
+        // ----------------------------
         Entidade aluno = new Entidade();
         aluno.setTitulo("Aluno");
         aluno.setClasse("Aluno");
@@ -314,8 +310,9 @@ public class MainAcademico {
         modulo.adicionar(aluno);
 
 
-
+        // ----------------------------
         // TURMA
+        // ----------------------------
         Entidade turma = new Entidade();
         turma.setTitulo("Turma");
         turma.setClasse("Turma");
@@ -331,13 +328,32 @@ public class MainAcademico {
 
         turma.adicionarAcao(new Acao(turmaAlunos, "Alunos", "nome"));
         turma.adicionarAcao(new Acao(turmaDisciplinas, "Disciplinas", "nome"));
-        turma.adicionarAcao(new Acao(turmaTrabalhos, "Trabalhos", "nome"));
-        turma.adicionarAcao(new Acao(turmaAulas, "Aulas Ministradas", "nome"));
 
         modulo.adicionar(turma);
 
 
+        // ----------------------------
+        // TRABALHO
+        // ----------------------------
+        Entidade trabalho = new Entidade();
+        trabalho.setTitulo("Trabalho Acadêmico");
+        trabalho.setClasse("Trabalho");
+
+        trabalho.adicionar(new CampoReferencia("Turma", "nome", "Turma", 6));
+        trabalho.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 6));
+        trabalho.adicionar(new CampoTexto("titulo", "Título", 8));
+        trabalho.adicionar(new CampoAreaTexto("descricao", "Descrição", 12));
+        trabalho.adicionar(new CampoDate("dataEntrega", "Entrega", 4));
+        trabalho.adicionar(new CampoEnum("status", "Status", 4,
+                new String[]{"ABERTO", "ENTREGUE", "ATRASADO"}));
+
+        trabalho.adicionarAcao(new Acao(trabalhoNotas, "Notas", "titulo"));
+        modulo.adicionar(trabalho);
+
+
+        // ----------------------------
         // LIVRO
+        // ----------------------------
         Entidade livro = new Entidade();
         livro.setTitulo("Livro");
         livro.setClasse("Livro");
@@ -354,8 +370,9 @@ public class MainAcademico {
         modulo.adicionar(livro);
 
 
-
+        // ----------------------------
         // USUÁRIO
+        // ----------------------------
         Entidade usuario = new Entidade();
         usuario.setTitulo("Usuário");
         usuario.setClasse("Usuario");

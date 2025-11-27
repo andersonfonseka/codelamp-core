@@ -22,6 +22,8 @@ public class Entidade {
 	
 	private String titulo;
 	
+	private boolean isMenuVisivel = false;
+	
 	public String getTitulo() {
 		return titulo;
 	}
@@ -86,6 +88,14 @@ public class Entidade {
 	
 	public boolean isKanban() {
 		return this instanceof Kanban;
+	}
+	
+	public boolean isMenuVisivel() {
+		return isMenuVisivel;
+	}
+
+	public void setMenuVisivel(boolean isMenuVisivel) {
+		this.isMenuVisivel = isMenuVisivel;
 	}
 	
 }

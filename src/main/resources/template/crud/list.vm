@@ -3,12 +3,11 @@
 
 
 	<p>
-
 		<nav aria-label="breadcrumb" class="mb-3">
-			<ol class="breadcrumb">
+			<ol class="breadcrumb admin-bc">
 				<li class="breadcrumb-item"><a href="/">Início</a></li>
 				<li class="breadcrumb-item">${entidade.modulo.titulo}</li>
-				<li class="breadcrumb-item">${entidade.titulo}</li>
+				<li class="breadcrumb-item active">${entidade.titulo}</li>
 			</ol>
 		</nav>
 	<p>

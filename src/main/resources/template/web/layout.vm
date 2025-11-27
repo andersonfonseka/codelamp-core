@@ -17,6 +17,31 @@
 
 <title>${projeto.titulo}</title>
 
+<style>
+.admin-bc {
+    background: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+
+.admin-bc a {
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.admin-bc .breadcrumb-item + .breadcrumb-item::before {
+    color: #aaa;
+}
+
+.admin-bc .active {
+    font-weight: 600;
+    color: #212529;
+}
+</style>
+
+
 </head>
 
 <body>

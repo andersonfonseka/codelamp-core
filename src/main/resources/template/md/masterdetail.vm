@@ -4,7 +4,7 @@
 	<p>
 
 		<nav aria-label="breadcrumb" class="mb-3">
-			<ol class="breadcrumb">
+			<ol class="breadcrumb admin-bc">
 				<li class="breadcrumb-item"><a href="/">Início</a></li>
 				<li class="breadcrumb-item"><a href="/${mestre.entidadeReferencia.entidade.classe.toLowerCase()}">${mestre.entidadeReferencia.entidade.titulo}</a></li>
 				<li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
@@ -68,7 +68,13 @@
 							<td>*{p.${campo.nome}}</td>
 							#end
 						#end
-							<td><a class="btn btn-sm btn-danger" href="/${mestre.nomePasta}/remover?id=${p.id}">Remover</a></td>
+							<td><a class="btn btn-sm btn-danger" href="/${mestre.nomePasta}/remover?id=${p.id}">Remover</a>
+							
+							#foreach($acao in ${mestre.acoes})
+							<a class="btn btn-warning btn-sm py-1 mb-1" href="/${acao.mestre.classe.toLowerCase()}/id?id=${p.id}">${acao.titulo}</a>
+							#end
+							
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

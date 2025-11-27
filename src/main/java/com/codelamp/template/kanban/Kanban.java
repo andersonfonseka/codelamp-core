@@ -14,8 +14,6 @@ public class Kanban extends MestreDetalhe {
 	private CampoEnum campoStatus;
 	
 	private String[] atributos;
-	
-	private boolean isMenuVisivel = false;
 
 	public MestreDetalhe getMestreDetalhe() {
 		return mestreDetalhe;
@@ -55,14 +53,6 @@ public class Kanban extends MestreDetalhe {
 
 	public void setAtributos(String[] atributos) {
 		this.atributos = atributos;
-	}
-
-	public boolean isMenuVisivel() {
-		return isMenuVisivel;
-	}
-
-	public void setMenuVisivel(boolean isMenuVisivel) {
-		this.isMenuVisivel = isMenuVisivel;
 	}
 	
 }
