@@ -54,6 +54,7 @@
 							
 							<div class="col-${campo.posicao} mb-3">
 							<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
+							
 							<select	name="${campo.nome}Id" class="form-control" id="${campo.nome}Input" required>
 								<option value="">Selecione</option>
 							

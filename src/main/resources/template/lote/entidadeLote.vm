@@ -5,11 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 
-#foreach( $campo in ${entidade.filtro.campos} )
-#if($campo.referencia)
-import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
-#end
-#end
+import com.example.codelamp.${entidade.campoMestre.tipo.toLowerCase()}.${entidade.campoMestre.tipo};
 
 #foreach( $campo in ${entidade.campos} )
 #if($campo.referencia)
@@ -22,8 +18,12 @@ public class $entidade.classe {
 	private String id;
 	
 	private String action;
+	
+	private ${entidade.campoMestre.tipo} ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	
+	private String ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id;
 
-#foreach( $campo in ${entidade.filtro.campos} )
+#foreach( $campo in ${entidade.campos} )
 	#if($campo.tipo == 'Date')
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		private $campo.tipo ${campo.nome};
@@ -37,6 +37,7 @@ public class $entidade.classe {
 		private $campo.tipo $campo.nome;
 	#end
 #end
+
 	
 	public ${entidade.classe}() {}
 	
@@ -56,9 +57,22 @@ public class $entidade.classe {
 		this.action = action;
 	}
 
-	#foreach( $campo in ${entidade.filtro.campos} )
-		#parse("template/operacoes.vm")
-	#end
+
+	public void set${entidade.campoMestre.tipo}(${entidade.campoMestre.tipo} ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}){
+		this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)} = ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	}
+	
+	public ${entidade.campoMestre.tipo} get${entidade.campoMestre.tipo}(){
+		return this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	}
+	
+	public void set${entidade.campoMestre.tipo}Id(String id){
+		this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id = id;
+	}
+	
+	public String get${entidade.campoMestre.tipo}Id(){
+		return this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id;
+	}
 	
 	#foreach( $campo in ${entidade.campos} )
 		#parse("template/operacoes.vm")

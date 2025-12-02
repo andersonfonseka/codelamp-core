@@ -1,104 +1,84 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 
-<div class="container">
 	<p>
 
 		<nav aria-label="breadcrumb" class="mb-3">
 			<ol class="breadcrumb admin-bc">
 				<li class="breadcrumb-item"><a href="/">Início</a></li>
-				<li class="breadcrumb-item active" aria-current="page">${lote.titulo}</li>
+				<li class="breadcrumb-item"><a href="/${mestre.entidadeReferencia.entidade.classe.toLowerCase()}">${mestre.entidadeReferencia.entidade.titulo}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
 			</ol>
 		</nav>
 	<p>
 	<div class="bd-example-snippet bd-code-snippet">
 		<div class="bd-example m-0 border-0">
 
-			<h3>${lote.titulo}</h3>
+			<h3>${mestre.titulo}</h3>
 			<hr />
 
-			<form class="row needs-validation" name="${lote.nomePasta}form" method="POST"
-				action="/${lote.nomePasta}/carregar" novalidate>
+			<form class="row needs-validation" name="${mestre.nomePasta}form" method="POST"
+				action="/${mestre.nomePasta}" novalidate>
 
-				<input type="hidden" name="id"> <input type="hidden"
-					name="action" value="novo">
+				<input type="hidden" name="${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}Id" value="*{${mestre.entidadeReferencia.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.classe.substring(1)}X.id}"> 
+				<input type="hidden" name="id"> 
+				<input type="hidden" name="action" value="novo">
+
+					<div class="col-6 mb-3">
+						<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
+						<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
+					</div>
 					
-					#foreach( $campo in ${lote.filtro.campos} )
-						#parse("template/campos.vm")
-					#end
-					
-					#foreach( $campo in ${lote.campos} )
+					#foreach( $campo in ${mestre.campos} )
 						#parse("template/campos.vm")
 					#end
 
 				<p>
 				<div class="col mb-3">
-					<button type="submit" id="btnPesquisar"
+					<button type="submit" id="btnSalvar"
 						class="btn btn-dark btn-sm py-1">
-						<i class="bi-save"></i> Pesquisar
+						<i class="bi-save"></i> Salvar
 					</button>
 				</div>
 			</form>
 			
 			<hr />
-			
-				<form class="row needs-validation" name="lancamentonotasform"
-				method="POST" action="/${lote.nomePasta}" novalidate>
-
-				<div class="col mb-3">
-					<button type="submit" id="btnRegistrar"
-						class="btn btn-dark btn-sm py-1">
-						<i class="bi-save"></i> Registrar
-					</button>
-				</div>
 
 			<table class="table caption-top">
 				<thead>
 					<tr>
 					
-					#foreach( $campo in ${lote.saida.campos} )
+					#foreach( $campo in ${mestre.campos} )
 						<th scope="col">${campo.rotulo}</th>
 					#end
+						<th scope="col"></th>
+						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="p" items="*{${lote.nomePasta}s}">
+					<c:forEach var="p" items="*{${mestre.nomePasta}s}">
 						<tr>
-
-						#foreach($campo in ${lote.saida.campos})
-							
-							<td>
-								#if($campo.referencia)
-									*{p.${campo.nome.toLowerCase()}.${campo.campoReferencia}}
-								#elseif($campo.tipo == 'Date')
-									*{p.${campo.nome}Str}	
-								#elseif($campo.entradaLote)
-									
-									<input type="hidden" id="${lote.entidadeBase.toLowerCase()}IdInput"  name="${lote.entidadeBase.toLowerCase()}IdInput" value="*{p.id}"/>
-									
-									#if($campo.tipo == 'Enum')
-										<select	name="${campo.nome}Input" class="form-control" id="${campo.nome}Input" required>
-											<option value="">Selecione</option>
-											<c:forEach var="c" items="*{Dominio${campo.nome}}">
-												<option value="${c}" <c:if test="*{c eq p.${campo.nome}}">selected</c:if>>${c}</option>
-											</c:forEach>
-										</select>
-									#else
-										<input type="${campo.tipoEntrada}" id="${campo.nome}Input" name="${campo.nome}Input" class="form-control" value="*{p.${campo.nome}}" required></td>
-									#end
-								#else
-									*{p.${campo.nome}}
-								#end
-							</td>
+					
+						#foreach($campo in ${mestre.campos})
+							#if($campo.referencia)
+							<td>*{p.${campo.nome}.${campo.campoReferencia}}</td>
+							#elseif($campo.tipo == 'Date')
+							<td>*{p.${campo.nome}Str}</td>
+							#else
+							<td>*{p.${campo.nome}}</td>
+							#end
 						#end
+							<td><a class="btn btn-sm btn-danger py-1 mb-1" href="/${mestre.nomePasta}/remover?id=${p.id}">Remover</a>
 							
+							#foreach($acao in ${mestre.acoes})
+							<a class="btn btn-warning btn-sm py-1 mb-1" href="/${acao.mestre.classe.toLowerCase()}/id?id=${p.id}">${acao.titulo}</a>
+							#end
+							
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			
-			</form>
 
 		</div>
 	</div>
-</div>

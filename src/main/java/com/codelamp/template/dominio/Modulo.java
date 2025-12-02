@@ -49,6 +49,17 @@ public class Modulo {
 	public Map<String, Entidade> getEntidades() {
 		return entidades;
 	}
+	
+	public Entidade get(String key) {
+		
+		Entidade ent = null;
+		
+		if (this.entidades.containsKey(key)) {
+			ent = this.entidades.get(key);
+		}
+		
+		return ent;
+	}
 
 	public void gerar() {
 
@@ -91,6 +102,7 @@ public class Modulo {
 					generatorLote.gerarEntidade(context, (Lote) entidade);
 					generatorLote.gerarController(context, (Lote) entidade);
 					generatorLote.gerarService(context, (Lote) entidade);
+					generatorLote.gerarRepository(context, (Lote) entidade);
 				
 				} else if (entidade.getClass().getName().equals("com.codelamp.template.kanban.Kanban")) {
 

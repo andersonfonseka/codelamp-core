@@ -11,8 +11,7 @@
 			</ol>
 		</nav>
 	<p>
-	<div class="bd-example-snippet bd-code-snippet"
-		style="height: 600px; overflow-y: auto;">
+	<div class="bd-example-snippet bd-code-snippet" style="height: 100vh; overflow-y: auto; position: sticky; top: 0;">
 		<div class="bd-example m-0 border-0">
 
 			<h3>${entidade.titulo}</h3>
@@ -39,6 +38,8 @@
 						#foreach($campo in ${entidade.campos})
 							#if($campo.referencia)
 							<td>*{p.${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}.${campo.campoReferencia}}</td>
+							#elseif($campo.tipo == 'Enum')
+							<td>*{p.${campo.nome}Id}</td>
 							#elseif($campo.tipo == 'Date')
 							<td>*{p.${campo.nome}Str}</td>
 							#else

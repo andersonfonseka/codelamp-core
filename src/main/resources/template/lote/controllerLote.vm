@@ -8,11 +8,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
+
 #foreach( $campo in ${entidade.filtro.campos} )
 #if($campo.referencia)
 import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
 #end
 #end
+
+#foreach( $campo in ${entidade.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
+#end
+#end
+
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe}Service;
+
 
 @Controller
 @RequestMapping("/${entidade.classe.toLowerCase()}")
@@ -27,7 +38,17 @@ public class ${entidade.classe}Controller {
     @Autowired
     private ${entidade.classe}Service ${entidade.classe.toLowerCase()}Service;
     
+    @Autowired
+    private ${entidade.entidadeReferencia.classe}Service ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service;
+
 #foreach($campo in ${entidade.filtro.campos} )
+	#if($campo.referencia)
+    @Autowired
+    private ${campo.tipo}Service ${campo.tipo.toLowerCase()}Service;
+	#end
+#end
+    
+#foreach($campo in ${entidade.campos} )
 	#if($campo.referencia)
     @Autowired
     private ${campo.tipo}Service ${campo.tipo.toLowerCase()}Service;
@@ -46,55 +67,72 @@ public class ${entidade.classe}Controller {
 		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
 		#end
 	#end
+    
+     #foreach($campo in ${entidade.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		#end
 	
-	 #foreach($campo in ${entidade.saida.campos} )
 		#if($campo.tipo == 'Enum')
 		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
 		#end
 	#end
-	
-	
+    
+        model.addAttribute("${entidade.classe.toLowerCase()}s", ${entidade.classe.toLowerCase()}Service.listar());
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
     }
     
-    @PostMapping("/carregar")
-    public String carregar(Model model, ${entidade.classe}Saida ${entidade.classe.toLowerCase()}) {
+    @GetMapping("/{id}")
+    public String listar(Model model, @RequestParam String id, HttpSession session) {
     
-	    #foreach($campo in ${entidade.filtro.campos} )
-			#if($campo.referencia)
-			model.addAttribute("${campo.tipo.toLowerCase()}Id", ${entidade.classe.toLowerCase()}.${campo.metodoGet()}Id());
-			#end
+    session.setAttribute("${entidade.classe.toLowerCase()}Id", id);
+    
+     #foreach($campo in ${entidade.filtro.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
 		#end
-        
-        model.addAttribute("${entidade.classe.toLowerCase()}s", ${entidade.classe.toLowerCase()}Service.carregar(${entidade.classe.toLowerCase()}));
-        listar(model);
-        
+	
+		#if($campo.tipo == 'Enum')
+		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+		#end
+	#end
+    
+     #foreach($campo in ${entidade.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		#end
+	
+		#if($campo.tipo == 'Enum')
+		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+		#end
+	#end
+    
+    	model.addAttribute("${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}X", ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.obter(id));
+        model.addAttribute("${entidade.classe.toLowerCase()}s", ${entidade.classe.toLowerCase()}Service.listar(id));
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
     }
     
     @PostMapping
-    public String salvar(Model model, ${entidade.classe}Saida ${entidade.classe.toLowerCase()}) {
+    public String salvar(Model model, ${entidade.classe} ${entidade.classe.toLowerCase()}, HttpSession session) {
+         ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
         
-        ${entidade.classe.toLowerCase()} = ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
-        
-        #foreach($campo in ${entidade.filtro.campos} )
-			#if($campo.referencia)
-			model.addAttribute("${campo.tipo.toLowerCase()}Id", ${entidade.classe.toLowerCase()}.${campo.metodoGet()}Id());
-			#end
-		#end
-        
-        listar(model);
+        listar(model, ${entidade.classe.toLowerCase()}.get${entidade.campoMestre.tipo}Id(), session);
         
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
     }
     
     @GetMapping("/remover")
-    public String remover(@RequestParam String id) {
+    public String remover(Model model, @RequestParam String id, HttpSession session) {
     	${entidade.classe.toLowerCase()}Service.remover(id);
-        return REDIRECT;
+    	
+    	String ${entidade.classe.toLowerCase()}Id = String.valueOf(session.getAttribute("${entidade.classe.toLowerCase()}Id"));
+    	
+		listar(model, ${entidade.classe.toLowerCase()}Id, session);
+    	
+        return LAYOUT;
     }
 
 }

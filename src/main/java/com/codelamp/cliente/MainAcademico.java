@@ -4,8 +4,16 @@ import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.Acao;
 import com.codelamp.template.dominio.EntidadeReferencia;
 import com.codelamp.template.dominio.Modulo;
-import com.codelamp.template.dominio.campo.*;
+import com.codelamp.template.dominio.campo.CampoAreaTexto;
+import com.codelamp.template.dominio.campo.CampoDate;
+import com.codelamp.template.dominio.campo.CampoDouble;
+import com.codelamp.template.dominio.campo.CampoEmail;
+import com.codelamp.template.dominio.campo.CampoEnum;
+import com.codelamp.template.dominio.campo.CampoInteiro;
+import com.codelamp.template.dominio.campo.CampoReferencia;
+import com.codelamp.template.dominio.campo.CampoTexto;
 import com.codelamp.template.kanban.Kanban;
+import com.codelamp.template.lote.Lote;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class MainAcademico {
@@ -28,13 +36,13 @@ public class MainAcademico {
         alunoSolicitacoes.setClasse("SolicitacaoSecretaria");
 
         alunoSolicitacoes.setCampoMestre(
-                new CampoReferencia("Aluno", "nome", "Aluno", 8)
+                new CampoReferencia("Aluno", "nome", "Aluno", 6)
         );
 
         alunoSolicitacoes.adicionar(new CampoEnum("tipo", "Tipo", 6,
                 new String[]{"HISTORICO", "DECLARACAO", "BOLETIM", "ATESTADO", "OUTROS"}));
-        alunoSolicitacoes.adicionar(new CampoDate("dataAbertura", "Abertura", 4));
-        alunoSolicitacoes.adicionar(new CampoEnum("status", "Status", 4,
+        alunoSolicitacoes.adicionar(new CampoDate("dataAbertura", "Abertura", 6));
+        alunoSolicitacoes.adicionar(new CampoEnum("status", "Status", 6,
                 new String[]{"ABERTA", "EM_ANALISE", "CONCLUIDA", "CANCELADA"}));
         alunoSolicitacoes.adicionar(new CampoAreaTexto("observacoes", "Observações", 12));
 
@@ -48,14 +56,14 @@ public class MainAcademico {
         livroEmprestimos.setClasse("EmprestimoLivro");
 
         livroEmprestimos.setCampoMestre(
-                new CampoReferencia("Livro", "titulo", "Livro", 8)
+                new CampoReferencia("Livro", "titulo", "Livro", 6)
         );
 
-        livroEmprestimos.adicionar(new CampoReferencia("Aluno", "nome", "Aluno", 8));
-        livroEmprestimos.adicionar(new CampoDate("dataEmprestimo", "Empréstimo", 4));
-        livroEmprestimos.adicionar(new CampoDate("dataPrevistaDevolucao", "Prev. Devolução", 4));
-        livroEmprestimos.adicionar(new CampoDate("dataDevolucao", "Devolução", 4));
-        livroEmprestimos.adicionar(new CampoEnum("status", "Status", 4,
+        livroEmprestimos.adicionar(new CampoReferencia("Aluno", "nome", "Aluno", 6));
+        livroEmprestimos.adicionar(new CampoDate("dataEmprestimo", "Empréstimo", 6));
+        livroEmprestimos.adicionar(new CampoDate("dataPrevistaDevolucao", "Prev. Devolução", 6));
+        livroEmprestimos.adicionar(new CampoDate("dataDevolucao", "Devolução", 6));
+        livroEmprestimos.adicionar(new CampoEnum("status", "Status", 6,
                 new String[]{"EM_ANDAMENTO", "DEVOLVIDO", "ATRASADO"}));
 
         modulo.adicionar(livroEmprestimos);
@@ -72,8 +80,8 @@ public class MainAcademico {
                 new CampoReferencia("Curso", "nome", "Curso", 6)
         );
 
-        cursoDisciplinas.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 8));
-        cursoDisciplinas.adicionar(new CampoInteiro("periodo", "Período/Série", 4));
+        cursoDisciplinas.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 6));
+        cursoDisciplinas.adicionar(new CampoInteiro("periodo", "Período/Série", 6));
 
         modulo.adicionar(cursoDisciplinas);
 
@@ -87,13 +95,13 @@ public class MainAcademico {
         disciplinaConteudo.setClasse("ConteudoProgramatico");
 
         disciplinaConteudo.setCampoMestre(
-                new CampoReferencia("Disciplina", "nome", "Disciplina", 8)
+                new CampoReferencia("Disciplina", "nome", "Disciplina", 6)
         );
 
-        disciplinaConteudo.adicionar(new CampoTexto("titulo", "Título", 8));
+        disciplinaConteudo.adicionar(new CampoTexto("titulo", "Título", 6));
         disciplinaConteudo.adicionar(new CampoAreaTexto("descricao", "Descrição", 12));
-        disciplinaConteudo.adicionar(new CampoInteiro("cargaHoraria", "Carga Horária (h)", 4));
-        disciplinaConteudo.adicionar(new CampoInteiro("sequencia", "Sequência", 4));
+        disciplinaConteudo.adicionar(new CampoInteiro("cargaHoraria", "Carga Horária (h)", 6));
+        disciplinaConteudo.adicionar(new CampoInteiro("sequencia", "Sequência", 6));
 
         modulo.adicionar(disciplinaConteudo);
 
@@ -110,8 +118,8 @@ public class MainAcademico {
                 new CampoReferencia("Turma", "nome", "Turma", 6)
         );
 
-        turmaAlunos.adicionar(new CampoReferencia("Aluno", "nome", "Aluno", 8));
-        turmaAlunos.adicionar(new CampoEnum("situacao", "Situação", 4,
+        turmaAlunos.adicionar(new CampoReferencia("Aluno", "nome", "Aluno", 6));
+        turmaAlunos.adicionar(new CampoEnum("situacao", "Situação", 6,
                 new String[]{"MATRICULADO", "TRANCADO", "CANCELADO"}));
 
         modulo.adicionar(turmaAlunos);
@@ -129,9 +137,9 @@ public class MainAcademico {
                 new CampoReferencia("Turma", "nome", "Turma", 6)
         );
 
-        turmaDisciplinas.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 8));
+        turmaDisciplinas.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 6));
         turmaDisciplinas.adicionar(new CampoReferencia("Professor", "nome", "Professor", 6));
-        turmaDisciplinas.adicionar(new CampoInteiro("cargaHoraria", "Carga Horária", 4));
+        turmaDisciplinas.adicionar(new CampoInteiro("cargaHoraria", "Carga Horária", 6));
         turmaDisciplinas.adicionar(new CampoTexto("observacoes", "Observações", 12));
 
         modulo.adicionar(turmaDisciplinas);
@@ -141,17 +149,19 @@ public class MainAcademico {
         // -----------------------------------------------------------
         // TRABALHO → NOTAS
         // -----------------------------------------------------------
-        MestreDetalhe trabalhoNotas = new MestreDetalhe();
+        Lote trabalhoNotas = new Lote();
         trabalhoNotas.setTitulo("Notas do Trabalho");
         trabalhoNotas.setClasse("TrabalhoNota");
 
         trabalhoNotas.setCampoMestre(
-                new CampoReferencia("TurmaTrabalho", "descricao", "Trabalho", 8)
+                new CampoReferencia("TurmaTrabalho", "descricao", "Trabalho", 12)
         );
 
-        trabalhoNotas.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno da Turma", 8));
-        trabalhoNotas.adicionar(new CampoInteiro("nota", "Nota", 4));
-        trabalhoNotas.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
+        trabalhoNotas.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno da Turma", 6));
+        trabalhoNotas.adicionar(new CampoDouble("nota", "Nota", 6));
+        
+        trabalhoNotas.setCampoRotulo(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno da Turma", 6));
+        trabalhoNotas.setCampoValor(new CampoDouble("nota", "Nota", 6));
 
         modulo.adicionar(trabalhoNotas);
 
@@ -167,11 +177,11 @@ public class MainAcademico {
                 new CampoReferencia("Turma", "nome", "Turma", 6)
         );
 
-        turmaTrabalhos.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 8));
-        turmaTrabalhos.adicionar(new CampoTexto("titulo", "Título", 8));
-        turmaTrabalhos.adicionar(new CampoDate("dataEntrega", "Entrega", 4));
-        turmaTrabalhos.adicionar(new CampoAreaTexto("descricao", "Descrição", 12));
-        turmaTrabalhos.adicionar(new CampoEnum("status", "Status", 4,
+        turmaTrabalhos.adicionar(new CampoReferencia("Disciplina", "nome", "Disciplina", 6));
+        turmaTrabalhos.adicionar(new CampoTexto("titulo", "Título", 6));
+        turmaTrabalhos.adicionar(new CampoDate("dataEntrega", "Entrega", 6));
+        turmaTrabalhos.adicionar(new CampoAreaTexto("descricao", "Descrição", 6));
+        turmaTrabalhos.adicionar(new CampoEnum("status", "Status", 6,
                 new String[]{"ABERTO", "ENTREGUE", "ATRASADO"}));
         
         turmaTrabalhos.adicionarAcao(new Acao(trabalhoNotas, "Notas", "descricao"));
@@ -190,10 +200,10 @@ public class MainAcademico {
                 new CampoReferencia("TurmaAulaMinistrada", "descricao", "Aula", 6)
         );
 
-        aulaFrequencias.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno", 8));
-        aulaFrequencias.adicionar(new CampoEnum("presenca", "Presença", 4,
+        aulaFrequencias.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno", 6));
+        aulaFrequencias.adicionar(new CampoEnum("presenca", "Presença", 6,
                 new String[]{"PRESENTE", "AUSENTE", "JUSTIFICADA"}));
-        aulaFrequencias.adicionar(new CampoAreaTexto("observacao", "Observação", 12));
+        aulaFrequencias.adicionar(new CampoAreaTexto("observacao", "Observação", 6));
 
         modulo.adicionar(aulaFrequencias);
 
@@ -208,9 +218,9 @@ public class MainAcademico {
                 new CampoReferencia("Turma", "nome", "Turma", 6)
         );
 
-        turmaAulas.adicionar(new CampoReferencia("ConteudoProgramatico", "titulo", "Conteúdo", 8));
-        turmaAulas.adicionar(new CampoDate("data", "Data da Aula", 4));
-        turmaAulas.adicionar(new CampoAreaTexto("descricao", "Descrição da Aula", 12));
+        turmaAulas.adicionar(new CampoReferencia("ConteudoProgramatico", "titulo", "Conteúdo", 6));
+        turmaAulas.adicionar(new CampoDate("data", "Data da Aula", 6));
+        turmaAulas.adicionar(new CampoAreaTexto("descricao", "Descrição da Aula", 6));
         
         turmaAulas.adicionarAcao(new Acao(aulaFrequencias, "Frequencia", "descricao"));
 

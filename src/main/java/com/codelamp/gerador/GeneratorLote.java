@@ -10,108 +10,94 @@ import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.lote.Lote;
-import com.codelamp.template.lote.LoteSaida;
+import com.codelamp.template.md.MestreDetalhe;
 
 public class GeneratorLote extends GeneratorCRUD {
 
-	public void gerarLote(VelocityContext context, Lote lote) throws Exception, IOException {
+	public void gerarLote(VelocityContext context, Lote mestre) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/lote/lote.vm");
 
-		context.put("entidade", lote);
-		context.put("lote", lote);
+		context.put("entidade", mestre);
+		context.put("mestre", mestre);
 
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/frontend/" + lote.getNomePasta() + "/";
+		String path = "c:/temp/codigofonte/frontend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + lote.getNomePasta() + ".jsp"));
-		fw.write(stWriter.toString().replace("*", "$"));
-		fw.close();
+		
+		writeToDisk(stWriter, path, mestre.getNomePasta() + ".jsp");
 
 	}
 
-	public void gerarEntidade(VelocityContext context, Lote lote) throws Exception, IOException {
+	public void gerarEntidade(VelocityContext context, Lote mestre) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/lote/entidadeLote.vm");
 
-		context.put("entidade", lote);
+		context.put("entidade", mestre);
 
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + lote.getNomePasta() + "/";
+		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + lote.getClasse() + ".java"));
-		fw.write(stWriter.toString());
-		fw.close();
 		
-		gerarEntidade(context, lote, lote.getSaida());
-	
-	}
-	
-	public void gerarEntidade(VelocityContext context, Lote lote, LoteSaida loteSaida) throws Exception, IOException {
+		writeToDisk(stWriter, path, mestre.getClasse() + ".java");
 
-		Template template = getEngine().getTemplate("template/lote/loteSaida.vm");
-
-		context.put("entidadeBase", lote.getModulo().getEntidades().get(lote.getEntidadeBase()));
-		context.put("entidade", lote);
-
-		StringWriter stWriter = new StringWriter();
-		template.merge(context, stWriter);
-
-		String path = "c:/temp/codigofonte/backend/" + lote.getNomePasta() + "/";
-		new File(path).mkdirs();
-
-		FileWriter fw = new FileWriter(new File(path + loteSaida.getClasse() + ".java"));
-		fw.write(stWriter.toString());
-		fw.close();
 	}
 
-
-	public void gerarController(VelocityContext context, Lote lote) throws Exception, IOException {
+	public void gerarController(VelocityContext context, Lote mestre) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/lote/controllerLote.vm");
 
-		context.put("entidade", lote);
+		context.put("entidade", mestre);
 
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + lote.getNomePasta() + "/";
+		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 
-		FileWriter fw = new FileWriter(new File(path + lote.getClasse() + "Controller.java"));
-		fw.write(stWriter.toString());
-		fw.close();
-
+		writeToDisk(stWriter, path, mestre.getClasse() + "Controller.java");
+		
 	}
 
-	public void gerarService(VelocityContext context, Lote lote) throws Exception, IOException {
+	public void gerarService(VelocityContext context, Lote mestre) throws Exception, IOException {
 
-		Template template = getEngine().getTemplate("template/lote/loteService.vm");
+		Template template = getEngine().getTemplate("template/lote/serviceLote.vm");
 
-		context.put("entidade", lote);
-		context.put("entidadeBase", lote.getModulo().getEntidades().get(lote.getEntidadeBase()));
+		context.put("entidade", mestre);
 
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + lote.getNomePasta() + "/";
+		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
+		
+		writeToDisk(stWriter, path, mestre.getClasse() + "Service.java");
 
-		FileWriter fw = new FileWriter(new File(path + lote.getClasse() + "Service.java"));
-		fw.write(stWriter.toString());
-		fw.close();
+	}
+	
+	public void gerarRepository(VelocityContext context, Lote mestre) throws Exception, IOException {
+
+		Template template = getEngine().getTemplate("template/lote/repositoryLote.vm");
+
+		context.put("entidade", mestre);
+
+		StringWriter stWriter = new StringWriter();
+		template.merge(context, stWriter);
+
+		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		new File(path).mkdirs();
+		
+		writeToDisk(stWriter, path, mestre.getClasse() + "Repository.java");
 
 	}
 
-	public void gerarDominio(VelocityContext context, Lote lote) throws Exception, IOException {
+	public void gerarDominio(VelocityContext context, Lote mestre) throws Exception, IOException {
 
-		for (Campo campo : lote.getSaida().getCampos()) {
+		for (Campo campo : mestre.getCampos()) {
 
 			if (campo.getTipo().equals("Enum")) {
 
@@ -122,7 +108,7 @@ public class GeneratorLote extends GeneratorCRUD {
 				StringWriter stWriter = new StringWriter();
 				template.merge(context, stWriter);
 
-				String path = "c:/temp/codigofonte/backend/" + lote.getNomePasta() + "/";
+				String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
 				new File(path).mkdirs();
 
 				FileWriter fw = new FileWriter(new File(path + "Dominio" + campo.getNome() + ".java"));

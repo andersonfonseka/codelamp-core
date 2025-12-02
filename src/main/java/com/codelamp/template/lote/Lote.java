@@ -1,45 +1,28 @@
 package com.codelamp.template.lote;
 
-import com.codelamp.template.crud.Entidade;
-import com.codelamp.template.dominio.Filtro;
+import com.codelamp.template.dominio.campo.Campo;
+import com.codelamp.template.md.MestreDetalhe;
 
-public class Lote extends Entidade {
+public class Lote extends MestreDetalhe {
 	
-	private String entidadeBase;
+	private Campo campoRotulo;
 	
-	private Filtro filtro = new Filtro();
-	
-	private LoteSaida saida = new LoteSaida();
-	
-	public Filtro getFiltro() {
-		return filtro;
+	private Campo campoValor;
+
+	public Campo getCampoRotulo() {
+		return campoRotulo;
 	}
 
-	public void setFiltro(Filtro filtro) {
-		this.filtro = filtro;
-	}
-	
-	public String getEntidadeBase() {
-		return entidadeBase;
+	public void setCampoRotulo(Campo campoRotulo) {
+		this.campoRotulo = campoRotulo;
 	}
 
-	public void setEntidadeBase(String entidadeBase) {
-		this.entidadeBase = entidadeBase;
+	public Campo getCampoValor() {
+		return campoValor;
 	}
 
-	public LoteSaida getSaida() {
-		saida.setClasse(super.getClasse()+"Saida");
-		return saida;
-	}
-
-	public void setSaida(LoteSaida saida) {
-		saida.setLote(this);
-		this.saida = saida;
-	}
-
-	@Override
-	public String getNomePasta() {
-		return getClasse().replace(" ", "").toLowerCase();
+	public void setCampoValor(Campo campoValor) {
+		this.campoValor = campoValor;
 	}
 	
 }
