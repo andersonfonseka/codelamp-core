@@ -53,25 +53,6 @@ public class ${entidade.classe}Service {
 	}
 	
 	public void editar(${entidade.classe} ${entidade.classe.toLowerCase()}) {
-
-		#foreach($campo in ${entidade.filtro.campos} )
-			#if($campo.referencia)
-				${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
-			#end
-			#if($campo.tipo == 'Enum')
-				${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
-			#end
-		#end
-
-		#foreach($campo in ${entidade.campos} )
-			#if($campo.referencia)
-				${entidade.classe.toLowerCase()}.set${campo.tipo}(${campo.tipo.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}.get${campo.tipo}Id()));
-			#end
-			#if($campo.tipo == 'Enum')
-				${entidade.classe.toLowerCase()}.set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(${entidade.classe.toLowerCase()}.get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id());
-			#end
-		#end
-
 		this.${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Repository.editar(${entidade.classe.toLowerCase()});
 	}
 	

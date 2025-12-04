@@ -118,7 +118,7 @@ public class ${entidade.classe}Controller {
 	        		trabalhoNota.set${entidade.campoMestre.tipo}(${entidade.campoMestre.getVarTipo()}Service.obter(id));
 	        		trabalhoNota.set${entidade.campoMestre.tipo}Id(id);
 	        		
-	        		trabalhonotaService.salvar(trabalhoNota);
+	        		${entidade.classe.toLowerCase()}Service.salvar(trabalhoNota);
 				}
 	        }
 		
@@ -146,6 +146,16 @@ public class ${entidade.classe}Controller {
         	${entidade.classe.toLowerCase()}Service.editar(trabalhoNota);			 
 		}
     	
+    	#foreach($campo in ${entidade.campos} )
+			#if($campo.tipo == 'Enum')
+				model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+			#end
+		#end
+    	
+    	String id = String.valueOf(session.getAttribute("${entidade.classe.toLowerCase()}Id"));
+    	
+    	model.addAttribute("${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}X", ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.obter(id));
+        model.addAttribute("${entidade.classe.toLowerCase()}s", ${entidade.classe.toLowerCase()}Service.listar(id));
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
     

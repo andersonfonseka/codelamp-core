@@ -191,7 +191,7 @@ public class MainAcademico {
         // -----------------------------------------------------------
         // AULA MINISTRADA → FREQUÊNCIA
         // -----------------------------------------------------------
-        MestreDetalhe aulaFrequencias = new MestreDetalhe();
+        Lote aulaFrequencias = new Lote();
         aulaFrequencias.setTitulo("Frequência dos Alunos");
         aulaFrequencias.setClasse("AulaFrequencia");
 
@@ -200,10 +200,12 @@ public class MainAcademico {
         );
 
         aulaFrequencias.adicionar(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno", 6));
-        aulaFrequencias.adicionar(new CampoEnum("Presenca", "Presença", 6,
-                new String[]{"PRESENTE", "AUSENTE", "JUSTIFICADA"}));
-        aulaFrequencias.adicionar(new CampoAreaTexto("Observacao", "Observação", 6));
+        aulaFrequencias.adicionar(new CampoEnum("Presenca", "Presença", 6, new String[]{"PRESENTE", "AUSENTE", "JUSTIFICADA"}));
 
+        aulaFrequencias.setCampoRotulo(new CampoReferencia("TurmaAluno", "aluno.nome", "Aluno", 6));
+        aulaFrequencias.setCampoValor(new CampoEnum("Presenca", "Presença", 6, new String[]{"PRESENTE", "AUSENTE", "JUSTIFICADA"}));
+
+        
         modulo.adicionar(aulaFrequencias);
 
         // -----------------------------------------------------------

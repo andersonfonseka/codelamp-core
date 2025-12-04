@@ -30,13 +30,13 @@
 						#if($campo.referencia)
 							<div class="col-${campo.posicao} mb-3">
 							<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
-							<select	name="${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}Id" class="form-control" id="${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}Input" required>
+							<select	name="${campo.getVarTipo()}Id" class="form-control" id="${campo.getVarTipo()}Input" required>
 								<option value="">Selecione</option>
 							
 							<c:forEach var="c" items="*{${campo.nome.toLowerCase()}s}">
 
 								<c:choose>
-								<c:when test="*{c.id eq ${entidade.classe.toLowerCase()}Edit.${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}Id}">
+								<c:when test="*{c.id eq ${entidade.classe.toLowerCase()}Edit.${campo.getVarTipo()}Id}">
 									<option value="${c.id}" selected>*{c.${campo.campoReferencia.toLowerCase()}}</option>
 								</c:when>
 								<c:otherwise>
@@ -55,13 +55,13 @@
 							<div class="col-${campo.posicao} mb-3">
 							<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
 							
-							<select	name="${campo.nome}Id" class="form-control" id="${campo.nome}Input" required>
+							<select	name="${campo.getVarNome()}Id" class="form-control" id="${campo.getVarNome()}Input" required>
 								<option value="">Selecione</option>
 							
 							<c:forEach var="c" items="*{Dominio${campo.nome}}">
 
 								<c:choose>
-								<c:when test="*{c eq ${entidade.classe.toLowerCase()}Edit.${campo.nome}Id}">
+								<c:when test="*{c eq ${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}Id}">
 									<option value="${c}" selected>${c}</option>
 								</c:when>
 								<c:otherwise>
@@ -77,20 +77,20 @@
 					
 						#elseif($campo.tipoView == 'textarea')
 							<div class="col-${campo.posicao} mb-3">
-								<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-								<textarea name="${campo.nome}" class="form-control" cols="10" rows="3">*{${entidade.classe.toLowerCase()}Edit.${campo.nome}}</textarea>
+								<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+								<textarea name="${campo.getVarNome()}" class="form-control" cols="10" rows="3">*{${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}}</textarea>
 								<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 							</div>	
 						#elseif($campo.tipo == 'Date')
 							<div class="col-${campo.posicao} mb-3">
-								<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-								<input type="${campo.tipoEntrada}" name="${campo.nome}" class="form-control" value="*{${entidade.classe.toLowerCase()}Edit.${campo.nome}Str}" required>
+								<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+								<input type="${campo.tipoEntrada}" name="${campo.getVarNome()}" class="form-control" value="*{${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}Str}" required>
 								<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 							</div>	
 						#else
 							<div class="col-${campo.posicao} mb-3">
-								<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-								<input type="${campo.tipoEntrada}" name="${campo.nome}" class="form-control" value="*{${entidade.classe.toLowerCase()}Edit.${campo.nome}}" required>
+								<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+								<input type="${campo.tipoEntrada}" name="${campo.getVarNome()}" class="form-control" value="*{${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}}" required>
 								<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 							</div>
 						#end	

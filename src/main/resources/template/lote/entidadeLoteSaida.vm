@@ -21,7 +21,11 @@ public class ${entidade.classe}Saida {
 	
 	private String[] $campoRotulo;
 
+	#if($entidade.campoValor.tipo == 'Enum')
+	private String[] $campoValor;
+	#else
 	private ${entidade.campoValor.tipo}[] $campoValor;
+	#end
 	
 	public void set${entidade.campoRotulo.tipo}Id(String[] $campoRotulo){
 	this.$campoRotulo = $campoRotulo; 
@@ -31,13 +35,23 @@ public class ${entidade.classe}Saida {
 	return this.$campoRotulo; 
 	}
 
-	public void set${entidade.campoValor.nome}Lote(${entidade.campoValor.tipo}[] $campoValor){
+	#if($entidade.campoValor.tipo == 'Enum')
+	public void set${entidade.campoValor.nome}Lote(String[] $campoValor){
+	this.$campoValor = $campoValor; 
+	}
+	
+	public String[] get${entidade.campoValor.nome}Lote(){
+	return this.$campoValor; 
+	}
+	#else
+		public void set${entidade.campoValor.nome}Lote(${entidade.campoValor.tipo}[] $campoValor){
 	this.$campoValor = $campoValor; 
 	}
 	
 	public ${entidade.campoValor.tipo}[] get${entidade.campoValor.nome}Lote(){
 	return this.$campoValor; 
 	}
+	#end
 	
 
 }
