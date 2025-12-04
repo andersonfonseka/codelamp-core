@@ -1,11 +1,11 @@
 #if($campo.referencia)
 	<div class="col-${campo.posicao} mb-3">
 	<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
-	<select	name="${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}Id" class="form-control" id="${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}Input" required>
+	<select	name="${campo.getVarTipo()}Id" class="form-control" id="${campo.getVarTipo()}Input" required>
 		<option value="">Selecione</option>
 	
 	<c:forEach var="c" items="*{${campo.nome.toLowerCase()}s}">
-		<option value="*{c.id}" <c:if test="*{c.id eq ${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}Id}">selected</c:if>>*{c.${campo.campoReferencia}}</option>
+		<option value="*{c.id}" <c:if test="*{c.id eq ${campo.getVarTipo()}Id}">selected</c:if>>*{c.${campo.campoReferencia.toLowerCase()}}</option>
 	</c:forEach>
 	
 	</select>
@@ -14,7 +14,7 @@
 #elseif($campo.tipo == 'Enum')
 	<div class="col-${campo.posicao} mb-3">
 	<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
-	<select	name="${campo.nome}Id" class="form-control" id="${campo.nome}Input" required>
+	<select	name="${campo.getVarNome()}Id" class="form-control" id="${campo.getVarNome()}Input" required>
 		<option value="">Selecione</option>
 	
 	<c:forEach var="c" items="*{Dominio${campo.nome}}">
@@ -26,32 +26,32 @@
 	</div>
 #elseif($campo.tipo == 'Label')
 	<div class="col-${campo.posicao} mb-3">
-		<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-		<input type="${campo.tipoEntrada}" name="${campo.nome}" class="form-control" required>
+		<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+		<input type="${campo.tipoEntrada}" name="${campo.getVarNome()}" class="form-control" required>
 		<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 	</div>
 #elseif($campo.tipoView == 'textarea')
 	<div class="col-${campo.posicao} mb-3">
-		<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-		<textarea name="${campo.nome}" class="form-control" cols="10" rows="3"></textarea>
+		<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+		<textarea name="${campo.getVarNome()}" class="form-control" cols="10" rows="3"></textarea>
 		<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 	</div>	
 #elseif($campo.tipoView == 'img')
 	<div class="col-${campo.posicao} mb-3">
-		<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-		<img src="" name="${campo.nome}" class="form-control"></img>
+		<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+		<img src="" name="${campo.getVarNome()}" class="form-control"></img>
 		<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 	</div>	
 #elseif($campo.tipo == 'double')
 	<div class="col-${campo.posicao} mb-3">
-		<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-		<input type="${campo.tipoView}" step="any" name="${campo.nome}" class="form-control" required>
+		<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+		<input type="${campo.tipoView}" step="any" name="${campo.getVarNome()}" class="form-control" required>
 		<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 	</div>
 #else
 	<div class="col-${campo.posicao} mb-3">
-		<label for="${campo.nome}Input" class="form-label">${campo.rotulo}</label> 
-		<input type="${campo.tipoEntrada}" name="${campo.nome}" class="form-control" required>
+		<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+		<input type="${campo.tipoEntrada}" name="${campo.getVarNome()}" class="form-control" required>
 		<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
 	</div>
 #end	

@@ -37,13 +37,13 @@
 
 						#foreach($campo in ${entidade.campos})
 							#if($campo.referencia)
-							<td>*{p.${campo.tipo.substring(0,1).toLowerCase()}${campo.tipo.substring(1)}.${campo.campoReferencia}}</td>
+							<td>*{p.${campo.getVarTipo()}.${campo.campoReferencia.toLowerCase()}}</td>
 							#elseif($campo.tipo == 'Enum')
-							<td>*{p.${campo.nome}Id}</td>
+							<td>*{p.${campo.getVarNome()}Id}</td>
 							#elseif($campo.tipo == 'Date')
-							<td>*{p.${campo.nome}Str}</td>
+							<td>*{p.${campo.getVarNome()}Str}</td>
 							#else
-							<td>*{p.${campo.nome}}</td>
+							<td>*{p.${campo.getVarNome()}}</td>
 							#end
 						#end
 							<td><a class="btn btn-warning btn-sm py-1 mb-1" href="/${entidade.classe.toLowerCase()}/iniciarEditar?id=${p.id}">Editar</a>

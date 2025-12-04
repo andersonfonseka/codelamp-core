@@ -1,56 +1,56 @@
 #if($campo.referencia)
 		
-    public String get${campo.tipo.substring(0,1).toUpperCase()}${campo.tipo.substring(1)}Id() {
-        return this.${campo.tipo.toLowerCase()}Id;
+    public String get${campo.tipo}Id() {
+        return this.${campo.getVarTipo()}Id;
     }
 
-    public void set${campo.tipo.substring(0,1).toUpperCase()}${campo.tipo.substring(1)}Id(String ${campo.tipo.toLowerCase()}Id) {
-        this.${campo.tipo.toLowerCase()}Id = ${campo.tipo.toLowerCase()}Id;
+    public void set${campo.tipo}Id(String ${campo.getVarTipo()}Id) {
+        this.${campo.getVarTipo()}Id = ${campo.getVarTipo()}Id;
     }
     
-    public $campo.tipo get${campo.nome.substring(0,1).toUpperCase()}${campo.tipo.substring(1)}() {
-        return $campo.nome;
+    public $campo.tipo get${campo.nome}() {
+        return $campo.getVarNome();
     }
 
-    public void set${campo.nome.substring(0,1).toUpperCase()}${campo.tipo.substring(1)}($campo.tipo $campo.nome) {
-        this.$campo.nome = $campo.nome;
+    public void set${campo.nome}($campo.tipo $campo.getVarNome()) {
+        this.$campo.getVarNome() = $campo.getVarNome();
     }
     
 #elseif($campo.tipo == 'Enum')
 
-    public String get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id() {
-        return this.${campo.nome.toLowerCase()}Id;
+    public String get${campo.nome}Id() {
+        return this.${campo.getVarNome()}Id;
     }
 
-    public void set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Id(String ${campo.nome.toLowerCase()}Id) {
-        this.${campo.nome.toLowerCase()}Id = ${campo.nome.toLowerCase()}Id;
+    public void set${campo.nome}Id(String ${campo.getVarNome()}Id) {
+        this.${campo.getVarNome()}Id = ${campo.getVarNome()}Id;
     }
     
-    public String get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}() {
-        return this.${campo.nome};
+    public String get${campo.nome}() {
+        return this.${campo.getVarNome()};
     }
 
-    public void set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}(String ${campo.nome.toLowerCase()}) {
-        this.${campo.nome} = ${campo.nome.toLowerCase()};
+    public void set${campo.nome}(String ${campo.getVarNome()}) {
+        this.${campo.getVarNome()} = ${campo.getVarNome()};
     }
 
 #else
 
-    public $campo.tipo get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}() {
-        return $campo.nome;
+    public $campo.tipo get${campo.nome}() {
+        return $campo.getVarNome();
     }
 
-    public void set${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}($campo.tipo $campo.nome) {
-        this.$campo.nome = $campo.nome;
+    public void set${campo.nome}($campo.tipo $campo.getVarNome()) {
+        this.$campo.getVarNome() = $campo.getVarNome();
     }
 
 #end
 
 #if($campo.tipo == 'Date')
 
-    public String get${campo.nome.substring(0,1).toUpperCase()}${campo.nome.substring(1)}Str() {
+    public String get${campo.nome}Str() {
     		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			return sdf.format(this.${campo.nome});
+			return sdf.format(this.${campo.getVarNome()});
     }
 
 #end

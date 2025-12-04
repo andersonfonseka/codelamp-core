@@ -186,5 +186,14 @@ public abstract class Campo {
 	public boolean isReferencia() {
 		return this instanceof CampoReferencia;
 	}
+	
+	public String getVarNome() {
+		return nome.substring(0, 1).toLowerCase()+nome.substring(1);
+	}
+	
+	public String getVarTipo() {
+		return tipo.substring(0, 1).toLowerCase()+tipo.substring(1);
+	}
+
 
 }

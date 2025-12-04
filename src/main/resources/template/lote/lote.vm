@@ -28,10 +28,6 @@
 						<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
 						<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
 					</div>
-					
-					#foreach( $campo in ${mestre.campos} )
-						#parse("template/campos.vm")
-					#end
 
 				<p>
 				<div class="col mb-3">
@@ -40,45 +36,31 @@
 						<i class="bi-save"></i> Salvar
 					</button>
 				</div>
-			</form>
 			
 			<hr />
 
 			<table class="table caption-top">
 				<thead>
 					<tr>
-					
 					#foreach( $campo in ${mestre.campos} )
 						<th scope="col">${campo.rotulo}</th>
 					#end
-						<th scope="col"></th>
-						<th scope="col"></th>
 					</tr>
 				</thead>
+
 				<tbody>
-					<c:forEach var="p" items="*{${mestre.nomePasta}s}">
-						<tr>
-					
-						#foreach($campo in ${mestre.campos})
-							#if($campo.referencia)
-							<td>*{p.${campo.nome}.${campo.campoReferencia}}</td>
-							#elseif($campo.tipo == 'Date')
-							<td>*{p.${campo.nome}Str}</td>
-							#else
-							<td>*{p.${campo.nome}}</td>
-							#end
-						#end
-							<td><a class="btn btn-sm btn-danger py-1 mb-1" href="/${mestre.nomePasta}/remover?id=${p.id}">Remover</a>
-							
-							#foreach($acao in ${mestre.acoes})
-							<a class="btn btn-warning btn-sm py-1 mb-1" href="/${acao.mestre.classe.toLowerCase()}/id?id=${p.id}">${acao.titulo}</a>
-							#end
-							
-							</td>
-						</tr>
-					</c:forEach>
+				<c:forEach var="p" items="*{${entidade.classe.toLowerCase()}s}">
+				<tr>
+				
+				<td>*{p.${mestre.campoRotulo.getVarNome()}.${mestre.campoRotulo.campoReferencia}}<input type="hidden" name="${mestre.campoRotulo.getVarNome()}Id" value="${p.id}"></td>
+				<td><input type="number"  class="form-control"  name="${mestre.campoValor.getVarNome()}Lote" size="any" value="*{p.${mestre.campoValor.getVarNome()}}"></td>
+				
+				</td>
+				</tr>
+				</c:forEach>
 				</tbody>
 			</table>
-
+			</form>
+			
 		</div>
 	</div>

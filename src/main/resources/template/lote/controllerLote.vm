@@ -8,20 +8,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import jakarta.servlet.http.HttpSession;
 
 #foreach( $campo in ${entidade.filtro.campos} )
 #if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
 import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
+
 #end
 #end
 
 #foreach( $campo in ${entidade.campos} )
 #if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
 import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo}Service;
 #end
 #end
 
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe};
 import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe}Service;
 
 
@@ -86,27 +91,43 @@ public class ${entidade.classe}Controller {
     @GetMapping("/{id}")
     public String listar(Model model, @RequestParam String id, HttpSession session) {
     
-    session.setAttribute("${entidade.classe.toLowerCase()}Id", id);
-    
-     #foreach($campo in ${entidade.filtro.campos} )
+    	session.setAttribute("${entidade.classe.toLowerCase()}Id", id);
+    	
+    	List<${entidade.classe}> tNota = ${entidade.classe.toLowerCase()}Service.listar(id);
+
+ 	#foreach($campo in ${entidade.campos} )
 		#if($campo.referencia)
-		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+			
+			model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		
+			if (tNota.isEmpty()) {
+	        	
+	        	List<${campo.tipo}> tAluno = ${campo.tipo.toLowerCase()}Service.listar();
+	        	
+	        	for (${campo.tipo} turmaAluno : tAluno) {
+	        	
+	        	${entidade.classe} trabalhoNota = new ${entidade.classe}();
+	        		
+	        	#foreach($campo in ${entidade.campos} )
+					#if($campo.referencia)
+	        		trabalhoNota.set${campo.tipo}(${campo.getVarTipo()});
+	        		trabalhoNota.set${campo.tipo}Id(${campo.getVarTipo()}.getId());
+	        		#end
+	        	#end
+	        	
+	        		trabalhoNota.set${entidade.campoMestre.tipo}(${entidade.campoMestre.getVarTipo()}Service.obter(id));
+	        		trabalhoNota.set${entidade.campoMestre.tipo}Id(id);
+	        		
+	        		trabalhonotaService.salvar(trabalhoNota);
+				}
+	        }
+		
 		#end
 	
-		#if($campo.tipo == 'Enum')
-		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+			#if($campo.tipo == 'Enum')
+				model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+			#end
 		#end
-	#end
-    
-     #foreach($campo in ${entidade.campos} )
-		#if($campo.referencia)
-		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
-		#end
-	
-		#if($campo.tipo == 'Enum')
-		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
-		#end
-	#end
     
     	model.addAttribute("${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}X", ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.obter(id));
         model.addAttribute("${entidade.classe.toLowerCase()}s", ${entidade.classe.toLowerCase()}Service.listar(id));
@@ -115,13 +136,19 @@ public class ${entidade.classe}Controller {
     }
     
     @PostMapping
-    public String salvar(Model model, ${entidade.classe} ${entidade.classe.toLowerCase()}, HttpSession session) {
-         ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
-        
-        listar(model, ${entidade.classe.toLowerCase()}.get${entidade.campoMestre.tipo}Id(), session);
-        
+    public String salvar(Model model, ${entidade.classe}Saida ${entidade.classe.toLowerCase()}saida, HttpSession session) {
+    
+    	for (int i = 0; i < ${entidade.classe.toLowerCase()}saida.get${entidade.campoRotulo.tipo}Id().length; i++) {
+			
+			${entidade.classe} trabalhoNota = ${entidade.classe.toLowerCase()}Service.obter(${entidade.classe.toLowerCase()}saida.get${entidade.campoRotulo.tipo}Id()[i]);
+						 	   trabalhoNota.set${entidade.campoValor.nome}(${entidade.classe.toLowerCase()}saida.get${entidade.campoValor.nome}Lote()[i]);
+        				 
+        	${entidade.classe.toLowerCase()}Service.editar(trabalhoNota);			 
+		}
+    	
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
+    
     }
     
     @GetMapping("/remover")

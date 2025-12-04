@@ -1,0 +1,43 @@
+package com.example.codelamp.${entidade.classe.toLowerCase()};
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.example.codelamp.${entidade.campoMestre.tipo.toLowerCase()}.${entidade.campoMestre.tipo};
+
+#foreach( $campo in ${entidade.campos} )
+#if($campo.referencia)
+import com.example.codelamp.${campo.tipo.toLowerCase()}.${campo.tipo};
+#end
+#end
+
+public class ${entidade.classe}Saida {
+	
+	#set($campoRotulo = ${entidade.campoRotulo.getVarNome()}+"Id")
+	#set($campoValor = ${entidade.campoValor.getVarNome()}+"Lote")
+	
+	
+	private String[] $campoRotulo;
+
+	private ${entidade.campoValor.tipo}[] $campoValor;
+	
+	public void set${entidade.campoRotulo.tipo}Id(String[] $campoRotulo){
+	this.$campoRotulo = $campoRotulo; 
+	}
+	
+	public String[] get${entidade.campoRotulo.tipo}Id(){
+	return this.$campoRotulo; 
+	}
+
+	public void set${entidade.campoValor.nome}Lote(${entidade.campoValor.tipo}[] $campoValor){
+	this.$campoValor = $campoValor; 
+	}
+	
+	public ${entidade.campoValor.tipo}[] get${entidade.campoValor.nome}Lote(){
+	return this.$campoValor; 
+	}
+	
+
+}

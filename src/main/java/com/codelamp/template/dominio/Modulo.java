@@ -100,6 +100,7 @@ public class Modulo {
 					generatorLote.gerarLote(context, (Lote) entidade);
 					generatorLote.gerarDominio(context, (Lote) entidade);
 					generatorLote.gerarEntidade(context, (Lote) entidade);
+					generatorLote.gerarEntidadeSaida(context, (Lote) entidade);
 					generatorLote.gerarController(context, (Lote) entidade);
 					generatorLote.gerarService(context, (Lote) entidade);
 					generatorLote.gerarRepository(context, (Lote) entidade);

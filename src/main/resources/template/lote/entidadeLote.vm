@@ -19,22 +19,22 @@ public class $entidade.classe {
 	
 	private String action;
 	
-	private ${entidade.campoMestre.tipo} ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	private ${entidade.campoMestre.tipo} ${entidade.campoMestre.getVarTipo()};
 	
-	private String ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id;
+	private String ${entidade.campoMestre.getVarTipo()}Id;
 
 #foreach( $campo in ${entidade.campos} )
 	#if($campo.tipo == 'Date')
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
-		private $campo.tipo ${campo.nome};
+		private $campo.tipo $campo.getVarNome();
 	#elseif($campo.referencia)
-		private String ${campo.nome.toLowerCase()}Id;
-		private $campo.tipo $campo.nome;
+		private String $campo.getVarNome()Id;
+		private $campo.tipo $campo.getVarNome();
 	#elseif($campo.tipo == 'Enum')
-		private String ${campo.nome.toLowerCase()}Id;
-		private String $campo.nome;
+		private String $campo.getVarNome()Id;
+		private String $campo.getVarNome();
 	#else
-		private $campo.tipo $campo.nome;
+		private $campo.tipo $campo.getVarNome();
 	#end
 #end
 
@@ -58,20 +58,20 @@ public class $entidade.classe {
 	}
 
 
-	public void set${entidade.campoMestre.tipo}(${entidade.campoMestre.tipo} ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}){
-		this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)} = ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+	public void set${entidade.campoMestre.tipo}(${entidade.campoMestre.tipo} ${entidade.campoMestre.getVarTipo()}){
+		this.${entidade.campoMestre.getVarTipo()} = ${entidade.campoMestre.getVarTipo()};
 	}
 	
 	public ${entidade.campoMestre.tipo} get${entidade.campoMestre.tipo}(){
-		return this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)};
+		return this.${entidade.campoMestre.getVarTipo()};
 	}
 	
 	public void set${entidade.campoMestre.tipo}Id(String id){
-		this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id = id;
+		this.${entidade.campoMestre.getVarTipo()}Id = id;
 	}
 	
 	public String get${entidade.campoMestre.tipo}Id(){
-		return this.${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Id;
+		return this.${entidade.campoMestre.getVarTipo()}Id;
 	}
 	
 	#foreach( $campo in ${entidade.campos} )

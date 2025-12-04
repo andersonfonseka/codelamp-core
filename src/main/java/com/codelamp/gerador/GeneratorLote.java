@@ -10,7 +10,6 @@ import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.lote.Lote;
-import com.codelamp.template.md.MestreDetalhe;
 
 public class GeneratorLote extends GeneratorCRUD {
 
@@ -44,6 +43,23 @@ public class GeneratorLote extends GeneratorCRUD {
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, mestre.getClasse() + ".java");
+
+	}
+	
+	
+	public void gerarEntidadeSaida(VelocityContext context, Lote mestre) throws Exception, IOException {
+
+		Template template = getEngine().getTemplate("template/lote/entidadeLoteSaida.vm");
+
+		context.put("entidade", mestre);
+
+		StringWriter stWriter = new StringWriter();
+		template.merge(context, stWriter);
+
+		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		new File(path).mkdirs();
+		
+		writeToDisk(stWriter, path, mestre.getClasse() + "Saida.java");
 
 	}
 
