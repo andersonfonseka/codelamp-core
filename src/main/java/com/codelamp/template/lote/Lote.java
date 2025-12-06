@@ -1,6 +1,7 @@
 package com.codelamp.template.lote;
 
 import com.codelamp.template.dominio.campo.Campo;
+import com.codelamp.template.dominio.campo.CampoReferencia;
 import com.codelamp.template.md.MestreDetalhe;
 
 public class Lote extends MestreDetalhe {
@@ -15,6 +16,7 @@ public class Lote extends MestreDetalhe {
 
 	public void setCampoRotulo(Campo campoRotulo) {
 		this.campoRotulo = campoRotulo;
+		this.adicionar(campoRotulo);
 	}
 
 	public Campo getCampoValor() {
@@ -23,6 +25,7 @@ public class Lote extends MestreDetalhe {
 
 	public void setCampoValor(Campo campoValor) {
 		this.campoValor = campoValor;
+		this.adicionar(campoValor);
 	}
 	
 }

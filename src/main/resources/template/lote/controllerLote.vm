@@ -102,23 +102,23 @@ public class ${entidade.classe}Controller {
 		
 			if (tNota.isEmpty()) {
 	        	
-	        	List<${campo.tipo}> tAluno = ${campo.tipo.toLowerCase()}Service.listar();
+	        	List<${campo.tipo}> ${campo.tipo.toLowerCase()}list = ${campo.tipo.toLowerCase()}Service.listar();
 	        	
-	        	for (${campo.tipo} turmaAluno : tAluno) {
+	        	for (${campo.tipo} elemento : ${campo.tipo.toLowerCase()}list) {
 	        	
-	        	${entidade.classe} trabalhoNota = new ${entidade.classe}();
+	        	${entidade.classe} ${entidade.classe.toLowerCase()} = new ${entidade.classe}();
 	        		
 	        	#foreach($campo in ${entidade.campos} )
 					#if($campo.referencia)
-	        		trabalhoNota.set${campo.tipo}(${campo.getVarTipo()});
-	        		trabalhoNota.set${campo.tipo}Id(${campo.getVarTipo()}.getId());
+	        		${entidade.classe.toLowerCase()}.set${campo.tipo}(elemento);
+	        		${entidade.classe.toLowerCase()}.set${campo.tipo}Id(elemento.getId());
 	        		#end
 	        	#end
 	        	
-	        		trabalhoNota.set${entidade.campoMestre.tipo}(${entidade.campoMestre.getVarTipo()}Service.obter(id));
-	        		trabalhoNota.set${entidade.campoMestre.tipo}Id(id);
+	        		${entidade.classe.toLowerCase()}.set${entidade.campoMestre.tipo}(${entidade.campoMestre.getVarTipo()}Service.obter(id));
+	        		${entidade.classe.toLowerCase()}.set${entidade.campoMestre.tipo}Id(id);
 	        		
-	        		${entidade.classe.toLowerCase()}Service.salvar(trabalhoNota);
+	        		${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
 				}
 	        }
 		
