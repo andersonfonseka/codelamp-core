@@ -29,6 +29,23 @@ public class GeneratorMD extends Generator {
 		writeToDisk(stWriter, path, mestre.getNomePasta() + ".jsp");
 
 	}
+	
+	public void gerarForm(VelocityContext context, MestreDetalhe mestre) throws Exception, IOException {
+
+		Template template = getEngine().getTemplate("template/md/form.vm");
+
+		context.put("entidade", mestre);
+		context.put("mestre", mestre);
+
+		StringWriter stWriter = new StringWriter();
+		template.merge(context, stWriter);
+
+		String path = "c:/temp/codigofonte/frontend/" + mestre.getNomePasta() + "/";
+		new File(path).mkdirs();
+		
+		writeToDisk(stWriter, path, "form.jsp");
+
+	}
 
 	public void gerarEntidade(VelocityContext context, MestreDetalhe mestre) throws Exception, IOException {
 

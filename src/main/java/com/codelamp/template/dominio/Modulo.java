@@ -89,6 +89,7 @@ public class Modulo {
 				} else if (entidade.getClass().getName().equals("com.codelamp.template.md.MestreDetalhe")) {
 
 					generatorMD.gerarMasterDetail(context, (MestreDetalhe) entidade);
+					generatorMD.gerarForm(context, (MestreDetalhe) entidade);
 					generatorMD.gerarDominio(context, (MestreDetalhe) entidade);
 					generatorMD.gerarEntidade(context, (MestreDetalhe) entidade);
 					generatorMD.gerarController(context, (MestreDetalhe) entidade);

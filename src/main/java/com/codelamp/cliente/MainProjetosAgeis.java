@@ -144,7 +144,7 @@ public class MainProjetosAgeis {
                 new String[]{"BACKLOG", "EM_ANDAMENTO", "EM_TESTE", "CONCLUIDA"}));
 
         kanbanTarefas.setAtributos(new String[]{
-                "tipo",
+                "titulo",
                 "prioridade",
                 "membro.nome",
                 "estimativaPontos"

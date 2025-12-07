@@ -32,7 +32,7 @@ public class ${entidade.classe}Controller {
 	private static final String LAYOUT = "layout";
 	private static final String PAGECONTENT = "pageContent";
 	
-	private static final String REDIRECT = "redirect:/${entidade.classe.toLowerCase()}";
+	private static final String FORM = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/form.jsp";
 	private static final String LIST = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/${entidade.classe.toLowerCase()}.jsp";
 
     @Autowired
@@ -82,6 +82,27 @@ public class ${entidade.classe}Controller {
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
     }
+    
+    @GetMapping("/novo")
+    public String novo(Model model, HttpSession session) {
+    
+    	String id = session.getAttribute("${entidade.classe.toLowerCase()}Id").toString();
+    	
+    	#foreach($campo in ${entidade.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		#end
+	
+		#if($campo.tipo == 'Enum')
+		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+		#end
+		#end
+
+        model.addAttribute("${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}X", ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.obter(id));
+        model.addAttribute(PAGECONTENT, FORM);
+        return LAYOUT;
+    }
+    
     
     @GetMapping("/{id}")
     public String listar(Model model, @RequestParam String id, HttpSession session) {

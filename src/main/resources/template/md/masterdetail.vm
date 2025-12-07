@@ -16,31 +16,14 @@
 
 			<h3>${mestre.titulo}</h3>
 			<hr />
-
-			<form class="row needs-validation" name="${mestre.nomePasta}form" method="POST"
-				action="/${mestre.nomePasta}" novalidate>
-
-				<input type="hidden" name="${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}Id" value="*{${mestre.entidadeReferencia.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.classe.substring(1)}X.id}"> 
-				<input type="hidden" name="id"> 
-				<input type="hidden" name="action" value="novo">
-
-					<div class="col-12 mb-3">
-						<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
-						<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
-					</div>
-					
-					#foreach( $campo in ${mestre.campos} )
-						#parse("template/campos.vm")
-					#end
-
-				<p>
-				<div class="col mb-3">
-					<button type="submit" id="btnSalvar"
-						class="btn btn-dark btn-sm py-1">
-						<i class="bi-save"></i> Salvar
-					</button>
-				</div>
-			</form>
+			
+			<a class="btn btn-dark btn-sm py-1" href="/${mestre.classe.toLowerCase()}/novo"><i class="bi bi-file-earmark-plus"></i> Novo</a>
+			<hr />
+			
+			<div class="col-12 mb-3">
+			<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
+			<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
+			</div>
 			
 			<hr />
 
