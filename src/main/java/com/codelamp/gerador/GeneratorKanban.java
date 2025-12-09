@@ -8,9 +8,21 @@ import java.io.StringWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
+import com.codelamp.template.dominio.Projeto;
 import com.codelamp.template.kanban.Kanban;
 
 public class GeneratorKanban extends Generator {
+	
+	private String path = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/frontend/";
+	private String pathBknd = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/backend/";
+
+	
+	
+	
+	public GeneratorKanban(Projeto projeto) {
+		super(projeto);
+		// TODO Auto-generated constructor stub
+	}
 
 	public void gerarKanban(VelocityContext context, Kanban kanban) throws IOException {
 
@@ -22,7 +34,7 @@ public class GeneratorKanban extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/frontend/" + kanban.getNomePasta() + "/";
+		String path = this.path + kanban.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		FileWriter fw = new FileWriter(new File(path + kanban.getNomePasta() + ".jsp"));
@@ -40,7 +52,7 @@ public class GeneratorKanban extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + kanban.getNomePasta() + "/";
+		String path = this.pathBknd + kanban.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		FileWriter fw = new FileWriter(new File(path + kanban.getClasse() + "Controller.java"));
@@ -58,7 +70,7 @@ public class GeneratorKanban extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + kanban.getNomePasta() + "/";
+		String path = this.pathBknd + kanban.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		FileWriter fw = new FileWriter(new File(path + kanban.getClasse() + "Service.java"));

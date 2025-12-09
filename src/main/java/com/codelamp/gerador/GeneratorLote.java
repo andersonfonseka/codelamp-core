@@ -8,10 +8,19 @@ import java.io.StringWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
+import com.codelamp.template.dominio.Projeto;
 import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.lote.Lote;
 
 public class GeneratorLote extends GeneratorCRUD {
+	
+	private String path = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/frontend/";
+	private String pathBknd = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/backend/";
+	
+	public GeneratorLote(Projeto projeto) {
+		super(projeto);
+		// TODO Auto-generated constructor stub
+	}
 
 	public void gerarLote(VelocityContext context, Lote mestre) throws Exception, IOException {
 
@@ -23,7 +32,7 @@ public class GeneratorLote extends GeneratorCRUD {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/frontend/" + mestre.getNomePasta() + "/";
+		String path = this.path + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, mestre.getNomePasta() + ".jsp");
@@ -39,7 +48,7 @@ public class GeneratorLote extends GeneratorCRUD {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		String path = this.pathBknd + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, mestre.getClasse() + ".java");
@@ -56,7 +65,7 @@ public class GeneratorLote extends GeneratorCRUD {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		String path = this.pathBknd + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, mestre.getClasse() + "Saida.java");
@@ -72,7 +81,7 @@ public class GeneratorLote extends GeneratorCRUD {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		String path = this.pathBknd + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		writeToDisk(stWriter, path, mestre.getClasse() + "Controller.java");
@@ -88,7 +97,7 @@ public class GeneratorLote extends GeneratorCRUD {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		String path = this.pathBknd + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, mestre.getClasse() + "Service.java");
@@ -104,7 +113,7 @@ public class GeneratorLote extends GeneratorCRUD {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+		String path = this.pathBknd + mestre.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, mestre.getClasse() + "Repository.java");
@@ -124,7 +133,7 @@ public class GeneratorLote extends GeneratorCRUD {
 				StringWriter stWriter = new StringWriter();
 				template.merge(context, stWriter);
 
-				String path = "c:/temp/codigofonte/backend/" + mestre.getNomePasta() + "/";
+				String path = this.pathBknd + mestre.getNomePasta() + "/";
 				new File(path).mkdirs();
 
 				FileWriter fw = new FileWriter(new File(path + "Dominio" + campo.getNome() + ".java"));

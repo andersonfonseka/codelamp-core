@@ -1,7 +1,9 @@
 package com.codelamp.template.crud;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.codelamp.template.dominio.Acao;
 import com.codelamp.template.dominio.EntidadeReferencia;
@@ -16,7 +18,9 @@ public class Entidade {
 	
 	private String classe;
 	
-	private List<Campo> campos = new ArrayList<>();
+	private List<Campo> campos = new ArrayList<Campo>();
+	
+	private Map<String, Campo> camposHash = new HashMap<String, Campo>();
 	
 	private List<Acao> acoes = new ArrayList<>();
 	
@@ -24,28 +28,38 @@ public class Entidade {
 	
 	private boolean isMenuVisivel = false;
 	
-	public String getTitulo() {
-		return titulo;
+	public Entidade(String titulo, String classe) {
+		super();
+		this.classe = classe;
+		this.titulo = titulo;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public String getTitulo() {
+		return titulo;
 	}
 
 	public String getClasse() {
 		return classe;
 	}
 
-	public void setClasse(String classe) {
-		this.classe = classe;
-	}
-
 	public List<Campo> getCampos() {
-		return campos;
+		return this.campos;
+	}
+	
+	public Campo getCampo(String nome) {
+		
+		Campo campo = null;
+		
+		if (this.camposHash.containsKey(nome)) {
+			campo = this.camposHash.get(nome);
+		}
+		
+		return campo;
 	}
 
 	public void adicionar(Campo campos) {
 		this.campos.add(campos);
+		this.camposHash.put(campos.getNome(), campos);
 	}
 
 	public Modulo getModulo() {

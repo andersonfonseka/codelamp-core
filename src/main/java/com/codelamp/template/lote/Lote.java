@@ -10,6 +10,10 @@ public class Lote extends MestreDetalhe {
 	
 	private Campo campoValor;
 
+	public Lote(String titulo, String classe, Campo campoMestre) {
+		super(titulo, classe, campoMestre);
+	}
+	
 	public Campo getCampoRotulo() {
 		return campoRotulo;
 	}

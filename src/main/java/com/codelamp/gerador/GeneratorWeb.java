@@ -8,13 +8,18 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.dominio.Modulo;
+import com.codelamp.template.dominio.Projeto;
 
 public class GeneratorWeb extends Generator {
+	
+	private String path = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/frontend/";
+	
+	public GeneratorWeb(Projeto projeto) {
+		super(projeto);
+		// TODO Auto-generated constructor stub
+	}
 
-	private String path = "c:/temp/codigofonte/frontend/";
-
-
-	public void gerarSideBar(VelocityContext context, Modulo projeto) throws Exception, IOException {
+	public void gerarSideBar(VelocityContext context, Projeto projeto) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/web/sidebar.vm");
 
@@ -28,7 +33,7 @@ public class GeneratorWeb extends Generator {
 		writeToDisk(stWriter, path, "sidebar.jsp");
 	}
 
-	public void gerarIndex(VelocityContext context, Modulo projeto) throws Exception, IOException {
+	public void gerarIndex(VelocityContext context, Projeto projeto) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/web/index.vm");
 
@@ -42,7 +47,7 @@ public class GeneratorWeb extends Generator {
 		writeToDisk(stWriter, path, "index.jsp");
 	}
 
-	public void gerarLayout(VelocityContext context, Modulo projeto) throws Exception, IOException {
+	public void gerarLayout(VelocityContext context, Projeto projeto) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/web/layout.vm");
 

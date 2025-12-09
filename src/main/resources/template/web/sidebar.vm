@@ -9,12 +9,17 @@
 	<hr>
 	<ul class="nav nav-pills flex-column mb-auto">
 	
-		#foreach($entidade in ${projeto.entidades} )
-			#if(!$entidade.isMestre())
-				<li><a href="/${entidade.classe.toLowerCase()}" class="nav-link text-white">${entidade.titulo}</a></li>
-			#elseif($entidade.isMenuVisivel())
-				<li><a href="/${entidade.classe.toLowerCase()}" class="nav-link text-white">${entidade.titulo}</a></li>
+		#foreach($modulo in ${projeto.modulos} )
+			<ul class="nav nav-pills flex-column mb-auto">
+			$modulo.titulo
+			#foreach($entidade in ${modulo.entidades} )
+				#if(!$entidade.isMestre())
+					<li><a href="/${entidade.classe.toLowerCase()}" class="nav-link text-white">${entidade.titulo}</a></li>
+				#elseif($entidade.isMenuVisivel())
+					<li><a href="/${entidade.classe.toLowerCase()}" class="nav-link text-white">${entidade.titulo}</a></li>
+				#end
 			#end
+			</ul>
 		#end
 		
 	</ul>

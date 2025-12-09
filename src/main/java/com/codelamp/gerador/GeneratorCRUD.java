@@ -8,10 +8,17 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.crud.Entidade;
+import com.codelamp.template.dominio.Projeto;
 import com.codelamp.template.dominio.campo.Campo;
 
 public class GeneratorCRUD extends Generator {
 
+	private String path = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/frontend/";
+	private String pathBknd = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/backend/";
+	
+	public GeneratorCRUD(Projeto projeto) {
+		super(projeto);
+	}
 
 	public void gerarEntidade(VelocityContext context, Entidade entidade) throws Exception, IOException {
 
@@ -22,7 +29,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + entidade.getNomePasta() + "/";
+		String path = this.pathBknd + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		writeToDisk(stWriter, path, entidade.getClasse() + ".java");
@@ -42,7 +49,7 @@ public class GeneratorCRUD extends Generator {
 				StringWriter stWriter = new StringWriter();
 				template.merge(context, stWriter);
 
-				String path = "c:/temp/codigofonte/backend/" + entidade.getNomePasta() + "/";
+				String path = this.pathBknd + entidade.getNomePasta() + "/";
 				new File(path).mkdirs();
 
 				writeToDisk(stWriter, path, "Dominio" + campo.getNome() + ".java");
@@ -61,7 +68,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + entidade.getNomePasta() + "/";
+		String path = this.pathBknd + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		writeToDisk(stWriter, path, entidade.getClasse() + "Controller.java");
@@ -77,7 +84,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + entidade.getNomePasta() + "/";
+		String path = this.pathBknd + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, entidade.getClasse() + "Service.java");
@@ -93,7 +100,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/backend/" + entidade.getNomePasta() + "/";
+		String path = this.pathBknd + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 		
 		writeToDisk(stWriter, path, entidade.getClasse() + "Repository.java");
@@ -109,7 +116,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/frontend/" + entidade.getNomePasta() + "/";
+		String path = this.path + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		writeToDisk(stWriter, path, "list.jsp");
@@ -124,7 +131,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/frontend/" + entidade.getNomePasta() + "/";
+		String path = this.path + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		writeToDisk(stWriter, path, "form.jsp");
@@ -139,7 +146,7 @@ public class GeneratorCRUD extends Generator {
 		StringWriter stWriter = new StringWriter();
 		template.merge(context, stWriter);
 
-		String path = "c:/temp/codigofonte/frontend/" + entidade.getNomePasta() + "/";
+		String path = this.path + entidade.getNomePasta() + "/";
 		new File(path).mkdirs();
 
 		writeToDisk(stWriter, path, "formeditar.jsp");

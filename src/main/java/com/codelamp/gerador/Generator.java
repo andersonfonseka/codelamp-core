@@ -11,10 +11,13 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import com.codelamp.beautifier.BeautifierPro;
+import com.codelamp.template.dominio.Projeto;
 
 public class Generator {
 
 	private VelocityEngine engine;
+	
+	private Projeto projeto;
 
 	public Generator() {
 
@@ -31,6 +34,11 @@ public class Generator {
 		this.engine.init(props);
 
 	}
+	
+	public Generator(Projeto projeto) {
+		this();
+		this.projeto = projeto;
+	}
 
 	public VelocityEngine getEngine() {
 		return engine;
@@ -44,5 +52,15 @@ public class Generator {
 		fw.write(BeautifierPro.beautify(valor));
 		fw.close();
 	}
+
+	public Projeto getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
+	}
+	
+	
 
 }

@@ -1,5 +1,7 @@
 package com.codelamp.template.dominio.campo;
 
+import java.util.Objects;
+
 public abstract class Campo {
 
 	private String tipo;
@@ -195,5 +197,21 @@ public abstract class Campo {
 		return tipo.substring(0, 1).toLowerCase()+tipo.substring(1);
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(nome);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Campo other = (Campo) obj;
+		return Objects.equals(nome, other.nome);
+	}
+	
 }

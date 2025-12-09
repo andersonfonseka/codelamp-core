@@ -13,24 +13,19 @@ public class Kanban extends MestreDetalhe {
 	
 	private CampoEnum campoStatus;
 	
+	private Campo campoMestre;
+	
 	private String[] atributos;
-
-	public MestreDetalhe getMestreDetalhe() {
-		return mestreDetalhe;
-	}
-
-	public void setMestreDetalhe(MestreDetalhe mestreDetalhe) {
-		this.mestreDetalhe = mestreDetalhe;
-		
-		for(Campo campo: this.mestreDetalhe.getCampos()) {
-			if (campo instanceof CampoReferencia) {
-				this.campoReferencia = (CampoReferencia) campo;
-			} else if (campo instanceof CampoEnum) {
-				this.campoStatus = (CampoEnum) campo;
-			}
-		}
+	
+	public Kanban(String titulo, String classe) {
+		super(titulo, classe);
 	}
 	
+	public Kanban(String titulo, String classe, Campo campoMestre) {
+		super(titulo, classe);
+		this.campoMestre = campoMestre;
+	}
+
 	public CampoReferencia getCampoReferencia() {
 		return campoReferencia;
 	}

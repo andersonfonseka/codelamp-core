@@ -43,6 +43,7 @@
 		<nav aria-label="breadcrumb" class="mb-3">
 			<ol class="breadcrumb admin-bc">
 				<li class="breadcrumb-item"><a href="/">Início</a></li>
+				<li class="breadcrumb-item">${mestre.modulo.titulo}</li>
 				<li class="breadcrumb-item"><a href="/${mestre.entidadeReferencia.entidade.classe.toLowerCase()}">${mestre.entidadeReferencia.entidade.titulo}</a></li>
 				<li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
 			</ol>

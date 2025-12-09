@@ -21,17 +21,19 @@ public class Modulo {
 
 	VelocityContext context = new VelocityContext();
 
-	GeneratorWeb generatorWeb = new GeneratorWeb();
-	GeneratorCore generatorCore = new GeneratorCore();
-	GeneratorCRUD generatorCrud = new GeneratorCRUD();
-	GeneratorMD generatorMD = new GeneratorMD();
-	GeneratorLote generatorLote = new GeneratorLote();
-	GeneratorKanban generatorKanban = new GeneratorKanban();
-	GeneratorKanbanMD generatorKanbanMD = new GeneratorKanbanMD();
-
 	private Map<String, Entidade> entidades = new HashMap<>();
+	
+	private Projeto projeto;
 
 	private String titulo;
+
+	GeneratorCRUD generatorCrud;
+	GeneratorMD generatorMD;
+	GeneratorLote generatorLote;
+	GeneratorKanban generatorKanban;
+	GeneratorKanbanMD generatorKanbanMD;
+	
+	public Modulo() {}
 
 	public String getTitulo() {
 		return titulo;
@@ -65,13 +67,7 @@ public class Modulo {
 
 		try {
 
-			generatorWeb.gerarSideBar(context, this);
-			generatorWeb.gerarIndex(context, this);
-			generatorWeb.gerarLayout(context, this);
-			
-			generatorCore.gerarApplication(context, this);
-			generatorCore.gerarViewLogging(context, this);
-			generatorCore.gerarWebConfig(context, this);
+
 			
 			for (Entidade entidade : entidades.values()) {
 
@@ -127,4 +123,20 @@ public class Modulo {
 			e.printStackTrace();
 		}
 	}
+
+	public Projeto getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
+	
+		this.generatorCrud = new GeneratorCRUD(projeto);
+		this.generatorKanban = new GeneratorKanban(projeto);
+		this.generatorKanbanMD = new GeneratorKanbanMD(projeto);
+		this.generatorLote = new GeneratorLote(projeto);
+		this.generatorMD = new GeneratorMD(projeto);
+
+	}
+	
 }

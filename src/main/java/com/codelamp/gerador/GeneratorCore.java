@@ -8,14 +8,17 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.template.dominio.Modulo;
+import com.codelamp.template.dominio.Projeto;
 
 public class GeneratorCore extends Generator {
 
-	private String path = "c:/temp/codigofonte/backend/";
-
-	public GeneratorCore() {}
+	private String path = "c:/temp/codigofonte/" + getProjeto().getNomePasta() + "/backend/";
 	
-	public void gerarApplication(VelocityContext context, Modulo projeto) throws Exception, IOException {
+	public GeneratorCore(Projeto projeto) {
+		super(projeto);
+	}
+
+	public void gerarApplication(VelocityContext context, Projeto projeto) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/core/Application.vm");
 
@@ -29,7 +32,7 @@ public class GeneratorCore extends Generator {
 		writeToDisk(stWriter, path, "Application.java");
 	}
 
-	public void gerarWebConfig(VelocityContext context, Modulo projeto) throws Exception, IOException {
+	public void gerarWebConfig(VelocityContext context, Projeto projeto) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/core/WebConfig.vm");
 
@@ -43,7 +46,7 @@ public class GeneratorCore extends Generator {
 		writeToDisk(stWriter, path, "WebConfig.java");
 	}
 	
-	public void gerarViewLogging(VelocityContext context, Modulo projeto) throws Exception, IOException {
+	public void gerarViewLogging(VelocityContext context, Projeto projeto) throws Exception, IOException {
 
 		Template template = getEngine().getTemplate("template/core/ViewLoggingInterceptor.vm");
 

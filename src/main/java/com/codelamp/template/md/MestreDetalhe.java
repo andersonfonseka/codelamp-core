@@ -10,6 +10,15 @@ public class MestreDetalhe extends Entidade {
 	
 	private Campo campoMestre;
 	
+	public MestreDetalhe(String titulo, String classe) {
+		super(titulo, classe);
+	}
+	
+	public MestreDetalhe(String titulo, String classe, Campo campoMestre) {
+		super(titulo, classe);
+		this.campoMestre = campoMestre;
+	}
+	
 	public EntidadeReferencia getEntidadeReferencia() {
 		return entidadeReferencia;
 	}
@@ -20,10 +29,6 @@ public class MestreDetalhe extends Entidade {
 
 	public Campo getCampoMestre() {
 		return campoMestre;
-	}
-
-	public void setCampoMestre(Campo campoMestre) {
-		this.campoMestre = campoMestre;
 	}
 
 	@Override
