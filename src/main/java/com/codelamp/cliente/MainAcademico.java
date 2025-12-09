@@ -24,7 +24,7 @@ public class MainAcademico {
         modulo.setTitulo("Gestão Acadêmica");
 
         MestreDetalhe alunoSolicitacoes = new MestreDetalhe();
-        alunoSolicitacoes.setTitulo("Solicitações do Aluno");
+        alunoSolicitacoes.setTitulo("Solicitações");
         alunoSolicitacoes.setClasse("SolicitacaoSecretaria");
 
         alunoSolicitacoes.setCampoMestre(new CampoReferencia("Aluno", "Nome", "Aluno", 12)
