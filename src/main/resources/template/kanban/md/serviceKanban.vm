@@ -11,29 +11,29 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.codelamp.${entidade.mestreDetalhe.classe.toLowerCase()}.${entidade.mestreDetalhe.classe};
-import com.example.codelamp.${entidade.mestreDetalhe.classe.toLowerCase()}.${entidade.mestreDetalhe.classe}Service;
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe};
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe}Service;
 
 @Service
 public class ${entidade.classe}Service {
 
 	@Autowired
-	private ${entidade.mestreDetalhe.classe}Service ${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)}Service;
+	private ${entidade.entidadeReferencia.classe}Service ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service;
 
-	public Map<String, List<${entidade.mestreDetalhe.classe}>> listar(String id) {
+	public Map<String, List<${entidade.entidadeReferencia.classe}>> listar(String id) {
 
-		Map<String, List<${entidade.mestreDetalhe.classe}>> kanban = new HashMap<>();
+		Map<String, List<${entidade.entidadeReferencia.classe}>> kanban = new HashMap<>();
 		
-		List<${entidade.mestreDetalhe.classe}> list = this.${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)}Service.listar(id);
+		List<${entidade.entidadeReferencia.classe}> list = this.${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.listar(id);
 		
-		for (${entidade.mestreDetalhe.classe} ${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)} : list) {
+		for (${entidade.entidadeReferencia.classe} ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)} : list) {
 			
-			if (!kanban.containsKey(${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)}.getStatus())) {
-				List<${entidade.mestreDetalhe.classe}> lst = new ArrayList<>();
-				lst.add(${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)});
-				kanban.put(${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)}.${entidade.campoStatus.metodoGet()}(), lst);	
+			if (!kanban.containsKey(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.getStatus())) {
+				List<${entidade.entidadeReferencia.classe}> lst = new ArrayList<>();
+				lst.add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
+				kanban.put(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}(), lst);	
 			} else {
-				kanban.get(${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.mestreDetalhe.classe.substring(0,1).toLowerCase()}${entidade.mestreDetalhe.classe.substring(1)});
+				kanban.get(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
 			}
 		}
 		

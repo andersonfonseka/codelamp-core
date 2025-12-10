@@ -49,5 +49,10 @@ public class Kanban extends MestreDetalhe {
 	public void setAtributos(String[] atributos) {
 		this.atributos = atributos;
 	}
+
+	public Campo getCampoMestre() {
+		return campoMestre;
+	}
+	
 	
 }

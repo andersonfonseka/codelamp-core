@@ -44,7 +44,7 @@
 			<ol class="breadcrumb admin-bc">
 				<li class="breadcrumb-item"><a href="/">Início</a></li>
 				<li class="breadcrumb-item">${mestre.modulo.titulo}</li>
-				<li class="breadcrumb-item"><a href="/${mestre.entidadeReferencia.entidade.classe.toLowerCase()}">${mestre.entidadeReferencia.entidade.titulo}</a></li>
+				<li class="breadcrumb-item">${mestre.entidadeReferencia.entidade.titulo}</li>
 				<li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
 			</ol>
 		</nav>
@@ -52,7 +52,7 @@
 	<div class="bd-example-snippet bd-code-snippet">
 		<div class="bd-example m-0 border-0">
 
-			<h3>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</h3>
+			<strong>*{${mestre.campoMestre.tipo.substring(0,1).toLowerCase()}${mestre.campoMestre.tipo.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
 			<hr />
 		
     		<div class="kanban-board">

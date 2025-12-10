@@ -88,6 +88,10 @@ public class Entidade {
 		this.acoes.add(acao);
 	}
 	
+	public void adicionarAcaoKanban(Acao acao) {
+		this.acoes.add(acao);
+	}
+	
 	public List<Acao> getAcoes() {
 		return acoes;
 	}

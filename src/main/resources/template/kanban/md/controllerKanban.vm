@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 
 import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe}Service;
+import com.example.codelamp.${entidade.campoMestre.tipo.toLowerCase()}.${entidade.campoMestre.tipo}Service;
+
 
 @Controller
 @RequestMapping("/${entidade.classe.toLowerCase()}")
@@ -23,7 +25,7 @@ public class ${entidade.classe}Controller {
 	private static final String LIST = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/${entidade.classe.toLowerCase()}.jsp";
 	
 	@Autowired
-    private ${entidade.entidadeReferencia.classe}Service ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service;
+    private ${entidade.campoMestre.tipo}Service ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Service;
 	
 	@Autowired
 	private ${entidade.classe}Service ${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Service;
@@ -31,7 +33,7 @@ public class ${entidade.classe}Controller {
 	@GetMapping("/{id}")
 	public String listar(Model model, @RequestParam String id, HttpSession session) {
 	
-    	model.addAttribute("${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}X", ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.obter(id));
+    	model.addAttribute("${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}X", ${entidade.campoMestre.tipo.substring(0,1).toLowerCase()}${entidade.campoMestre.tipo.substring(1)}Service.obter(id));
 		model.addAttribute("${entidade.classe.toLowerCase()}Map", ${entidade.classe.substring(0,1).toLowerCase()}${entidade.classe.substring(1)}Service.listar(id));
 		model.addAttribute(PAGECONTENT, LIST);
 		return LAYOUT;
