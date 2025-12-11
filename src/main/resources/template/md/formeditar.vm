@@ -1,0 +1,116 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+
+	<p>
+
+		<nav aria-label="breadcrumb" class="mb-3">
+			<ol class="breadcrumb admin-bc">
+				<li class="breadcrumb-item"><a href="/">Início</a></li>
+				<li class="breadcrumb-item">${entidade.modulo.titulo}</li>
+				<li class="breadcrumb-item"><a href="/${entidade.classe.toLowerCase()}">${entidade.classe}</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Edição
+					de ${entidade.titulo}s</li>
+			</ol>
+		</nav>
+	<p>
+	<div class="bd-example-snippet bd-code-snippet">
+		<div class="bd-example m-0 border-0">
+
+			<h3>${entidade.titulo}</h3>
+			<hr />
+
+			<form class="row needs-validation" name="${entidade.classe}sform" method="POST"
+				action="/${entidade.classe.toLowerCase()}" novalidate>
+
+				<input type="hidden" name="${entidade.campoMestre.getVarNome()}Id" value="*{${entidade.classe.toLowerCase()}Edit.${entidade.campoMestre.getVarNome()}Id}">
+				<input type="hidden" name="id" value="*{${entidade.classe.toLowerCase()}Edit.id}"> 
+				<input type="hidden" name="action" value="editar">
+					
+					#foreach( $campo in ${entidade.campos} )
+					
+						#if($campo.referencia)
+							<div class="col-${campo.posicao} mb-3">
+							<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
+							<select	name="${campo.getVarTipo()}Id" class="form-control" id="${campo.getVarTipo()}Input" required>
+								<option value="">Selecione</option>
+							
+							<c:forEach var="c" items="*{${campo.nome.toLowerCase()}s}">
+
+								<c:choose>
+								<c:when test="*{c.id eq ${entidade.classe.toLowerCase()}Edit.${campo.getVarTipo()}Id}">
+									<option value="${c.id}" selected>*{c.${campo.campoReferencia.toLowerCase()}}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${c.id}">*{c.${campo.campoReferencia.toLowerCase()}}</option>
+								</c:otherwise>
+								</c:choose>
+
+							</c:forEach>
+							
+							</select>
+							<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
+							</div>
+						
+						#elseif($campo.tipo == 'Enum')
+							
+							<div class="col-${campo.posicao} mb-3">
+							<label for="nomeInput" class="form-label">${campo.rotulo}</label> 
+							
+							<select	name="${campo.getVarNome()}Id" class="form-control" id="${campo.getVarNome()}Input" required>
+								<option value="">Selecione</option>
+							
+							<c:forEach var="c" items="*{Dominio${campo.nome}}">
+
+								<c:choose>
+								<c:when test="*{c eq ${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}Id}">
+									<option value="${c}" selected>${c}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${c}">${c}</option>
+								</c:otherwise>
+								</c:choose>
+
+							</c:forEach>
+							
+							</select>
+							<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
+							</div>
+					
+						#elseif($campo.tipoView == 'textarea')
+							<div class="col-${campo.posicao} mb-3">
+								<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+								<textarea name="${campo.getVarNome()}" class="form-control" cols="10" rows="3">*{${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}}</textarea>
+								<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
+							</div>	
+						#elseif($campo.tipo == 'Date')
+							<div class="col-${campo.posicao} mb-3">
+								<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+								<input type="${campo.tipoEntrada}" name="${campo.getVarNome()}" class="form-control" value="*{${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}Str}" required>
+								<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
+							</div>	
+						#else
+							<div class="col-${campo.posicao} mb-3">
+								<label for="${campo.getVarNome()}Input" class="form-label">${campo.rotulo}</label> 
+								<input type="${campo.tipoEntrada}" name="${campo.getVarNome()}" class="form-control" value="*{${entidade.classe.toLowerCase()}Edit.${campo.getVarNome()}}" required>
+								<div class="invalid-feedback">Informe um valor válido para '${campo.nome}.'.</div>
+							</div>
+						#end	
+						
+					#end
+
+				<p>
+				<div class="col mb-3">
+					<button type="submit" id="btnSalvar"
+						class="btn btn-dark btn-sm py-1">
+						<i class="bi-save"></i> Salvar
+					</button>
+					
+					<a class="btn btn-secondary btn-sm py-1" formnovalidate
+						href="/${entidade.classe.toLowerCase()}"><i class="bi-arrow-left"></i> Cancelar</a>
+					
+					<a class="btn btn-danger btn-sm py-1" href="/${entidade.classe.toLowerCase()}/remover?id=*{${entidade.classe.toLowerCase()}Edit.id}">Remover</a>	
+				</div>
+			</form>
+		</div>
+	</div>
+

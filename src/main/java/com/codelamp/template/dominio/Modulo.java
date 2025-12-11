@@ -86,6 +86,7 @@ public class Modulo {
 
 					generatorMD.gerarMasterDetail(context, (MestreDetalhe) entidade);
 					generatorMD.gerarForm(context, (MestreDetalhe) entidade);
+					generatorMD.gerarFormEditar(context, (MestreDetalhe) entidade);
 					generatorMD.gerarDominio(context, (MestreDetalhe) entidade);
 					generatorMD.gerarEntidade(context, (MestreDetalhe) entidade);
 					generatorMD.gerarController(context, (MestreDetalhe) entidade);

@@ -52,7 +52,7 @@
 							<td>*{p.${campo.getVarNome()}}</td>
 							#end
 						#end
-							<td><a class="btn btn-sm btn-danger py-1 mb-1" href="/${mestre.nomePasta}/remover?id=${p.id}">Remover</a>
+							<td><a class="btn btn-warning btn-sm py-1 mb-1" href="/${entidade.classe.toLowerCase()}/iniciarEditar?id=${p.id}">Editar</a>
 							
 							#foreach($acao in ${mestre.acoes})
 							<a class="btn btn-warning btn-sm py-1 mb-1" href="/${acao.mestre.classe.toLowerCase()}/id?id=${p.id}">${acao.titulo}</a>

@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe};
-import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.${entidade.entidadeReferencia.classe}Service;
+import com.example.codelamp.${entidade.entidadeReferencia.classe.toLowerCase()}.*;
 
 @Service
 public class ${entidade.classe}Service {
@@ -26,15 +25,15 @@ public class ${entidade.classe}Service {
 		
 		List<${entidade.entidadeReferencia.classe}> list = this.${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.listar(id);
 		
+		List<String> values = Dominio${entidade.campoStatus.nome}.obterInstancia().getItems();
+		
+		for (String string : values) {
+			List<${entidade.entidadeReferencia.classe}> lst = new ArrayList<>();
+			kanban.put(string, lst);
+		}
+		
 		for (${entidade.entidadeReferencia.classe} ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)} : list) {
-			
-			if (!kanban.containsKey(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.getStatus())) {
-				List<${entidade.entidadeReferencia.classe}> lst = new ArrayList<>();
-				lst.add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
-				kanban.put(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}(), lst);	
-			} else {
-				kanban.get(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
-			}
+			kanban.get(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
 		}
 		
 		return kanban;

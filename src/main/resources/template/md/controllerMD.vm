@@ -32,8 +32,10 @@ public class ${entidade.classe}Controller {
 	private static final String LAYOUT = "layout";
 	private static final String PAGECONTENT = "pageContent";
 	
+	private static final String REDIRECT = "redirect:/${entidade.classe.toLowerCase()}";
 	private static final String FORM = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/form.jsp";
 	private static final String LIST = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/${entidade.classe.toLowerCase()}.jsp";
+	private static final String EDIT_FORM = "/WEB-INF/jsp/${entidade.classe.toLowerCase()}/formeditar.jsp";
 
     @Autowired
     private ${entidade.classe}Service ${entidade.classe.toLowerCase()}Service;
@@ -135,15 +137,47 @@ public class ${entidade.classe}Controller {
         return LAYOUT;
     }
     
+    @GetMapping("/iniciarEditar")
+    public String iniciarEditar(Model model, @RequestParam String id) {
+
+    #foreach($campo in ${entidade.campos} )
+		#if($campo.referencia)
+		model.addAttribute("${campo.tipo.toLowerCase()}s", ${campo.tipo.toLowerCase()}Service.listar());
+		#end
+		
+		#if($campo.tipo == 'Enum')
+		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
+		#end
+	#end
+        model.addAttribute("${entidade.classe.toLowerCase()}Edit", ${entidade.classe.toLowerCase()}Service.obter(id));
+        model.addAttribute(PAGECONTENT, EDIT_FORM);
+        return LAYOUT;
+    }
+    
     @PostMapping
     public String salvar(Model model, ${entidade.classe} ${entidade.classe.toLowerCase()}, HttpSession session) {
-         ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
-        
+
+    	if (${entidade.classe.toLowerCase()}.getAction().equals("editar")) {
+        	${entidade.classe.toLowerCase()}Service.editar(${entidade.classe.toLowerCase()});
+    	} else {
+            ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
+    	}
+    	
         listar(model, ${entidade.classe.toLowerCase()}.get${entidade.campoMestre.tipo}Id(), session);
         
         model.addAttribute(PAGECONTENT, LIST);
         return LAYOUT;
     }
+    
+    //@PostMapping
+    //public String salvar(Model model, ${entidade.classe} ${entidade.classe.toLowerCase()}, HttpSession session) {
+    //     ${entidade.classe.toLowerCase()}Service.salvar(${entidade.classe.toLowerCase()});
+        
+    //    listar(model, ${entidade.classe.toLowerCase()}.get${entidade.campoMestre.tipo}Id(), session);
+        
+    //    model.addAttribute(PAGECONTENT, LIST);
+    //    return LAYOUT;
+    //}
     
     @GetMapping("/remover")
     public String remover(Model model, @RequestParam String id, HttpSession session) {

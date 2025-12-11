@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
+import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.dominio.Projeto;
 import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.md.MestreDetalhe;
@@ -57,6 +58,21 @@ public class GeneratorMD extends Generator {
 		
 		writeToDisk(stWriter, path, "form.jsp");
 
+	}
+	
+	public void gerarFormEditar(VelocityContext context, Entidade entidade) throws Exception, IOException {
+
+		Template template = getEngine().getTemplate("template/md/formeditar.vm");
+
+		context.put("entidade", entidade);
+
+		StringWriter stWriter = new StringWriter();
+		template.merge(context, stWriter);
+
+		String path = this.path + entidade.getNomePasta() + "/";
+		new File(path).mkdirs();
+
+		writeToDisk(stWriter, path, "formeditar.jsp");
 	}
 
 	public void gerarEntidade(VelocityContext context, MestreDetalhe mestre) throws Exception, IOException {
