@@ -26,7 +26,7 @@
 
 					<div class="col-12 mb-3">
 						<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
-						<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
+						<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo.toLowerCase()}}</strong>
 					</div>
 					
 					#foreach( $campo in ${mestre.campos} )
@@ -39,7 +39,11 @@
 						class="btn btn-dark btn-sm py-1">
 						<i class="bi-save"></i> Salvar
 					</button>
+				
+				<a class="btn btn-secondary btn-sm py-1" formnovalidate href="/${entidade.classe.toLowerCase()}/id?id=*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.id}"><i class="bi-arrow-left"></i> Cancelar</a>
+
 				</div>
+				
 			</form>
 
 		</div>

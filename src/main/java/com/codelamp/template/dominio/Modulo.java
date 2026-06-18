@@ -6,18 +6,16 @@ import java.util.Map;
 import org.apache.velocity.VelocityContext;
 
 import com.codelamp.gerador.GeneratorCRUD;
-import com.codelamp.gerador.GeneratorCore;
 import com.codelamp.gerador.GeneratorKanban;
 import com.codelamp.gerador.GeneratorKanbanMD;
 import com.codelamp.gerador.GeneratorLote;
 import com.codelamp.gerador.GeneratorMD;
-import com.codelamp.gerador.GeneratorWeb;
 import com.codelamp.template.crud.Entidade;
 import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.lote.Lote;
 import com.codelamp.template.md.MestreDetalhe;
 
-public class Modulo {
+public class Modulo implements IValidador {
 
 	VelocityContext context = new VelocityContext();
 
@@ -34,6 +32,11 @@ public class Modulo {
 	GeneratorKanbanMD generatorKanbanMD;
 	
 	public Modulo() {}
+	
+	public Modulo(String titulo) {
+		super();
+		this.titulo = titulo;
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -64,14 +67,25 @@ public class Modulo {
 	}
 
 	public void gerar() {
+		
+		ValidadorResultado resultado = this.validar();
+		
+		if (!resultado.isValido()) {
+			System.out.println(resultado.getMensagem());
+			return;
+		}
 
 		try {
-
-
 			
 			for (Entidade entidade : entidades.values()) {
 
 				if (entidade.getClass().getName().equals("com.codelamp.template.crud.Entidade")) {
+					
+					ValidadorResultado entResultado = entidade.validar();
+					
+					if (!entResultado.isValido()) {
+						System.out.println(entResultado.getMensagem());
+					}
 
 					generatorCrud.gerarEntidade(context, entidade);
 					generatorCrud.gerarDominio(context, entidade);
@@ -83,15 +97,23 @@ public class Modulo {
 					generatorCrud.gerarFormEditar(context, entidade);
 
 				} else if (entidade.getClass().getName().equals("com.codelamp.template.md.MestreDetalhe")) {
+					
+					MestreDetalhe md = (MestreDetalhe) entidade;
+					
+					ValidadorResultado mdResultado = md.validar();
+					
+					if (!mdResultado.isValido()) {
+						System.out.println(mdResultado.getMensagem());
+					}
 
-					generatorMD.gerarMasterDetail(context, (MestreDetalhe) entidade);
-					generatorMD.gerarForm(context, (MestreDetalhe) entidade);
-					generatorMD.gerarFormEditar(context, (MestreDetalhe) entidade);
-					generatorMD.gerarDominio(context, (MestreDetalhe) entidade);
-					generatorMD.gerarEntidade(context, (MestreDetalhe) entidade);
-					generatorMD.gerarController(context, (MestreDetalhe) entidade);
-					generatorMD.gerarService(context, (MestreDetalhe) entidade);
-					generatorMD.gerarRepository(context, (MestreDetalhe) entidade);
+					generatorMD.gerarMasterDetail(context, md);
+					generatorMD.gerarForm(context, md);
+					generatorMD.gerarFormEditar(context, md);
+					generatorMD.gerarDominio(context, md);
+					generatorMD.gerarEntidade(context, md);
+					generatorMD.gerarController(context, md);
+					generatorMD.gerarService(context, md);
+					generatorMD.gerarRepository(context, md);
 
 				} else if (entidade.getClass().getName().equals("com.codelamp.template.lote.Lote")) {
 
@@ -106,6 +128,13 @@ public class Modulo {
 				} else if (entidade.getClass().getName().equals("com.codelamp.template.kanban.Kanban")) {
 
 					Kanban kb = (Kanban) entidade;
+					
+					ValidadorResultado kbResultado = kb.validar();
+					
+					if (!kbResultado.isValido()) {
+						System.out.println(kbResultado.getMensagem());
+					}
+
 					
 					if (kb.isMenuVisivel()) {
 						generatorKanban.gerarKanban(context, kb);
@@ -138,6 +167,19 @@ public class Modulo {
 		this.generatorLote = new GeneratorLote(projeto);
 		this.generatorMD = new GeneratorMD(projeto);
 
+	}
+
+	@Override
+	public ValidadorResultado validar() {
+		
+		ValidadorResultado resultado = new ValidadorResultado();
+		
+		if (this.entidades.isEmpty()) {
+			resultado.addMensagem("O modulo deve ter ao menos uma entidade");
+			resultado.setValido(false);
+		}
+		
+		return resultado;
 	}
 	
 }

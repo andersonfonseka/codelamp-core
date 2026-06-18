@@ -18,13 +18,18 @@
 
 			<h3>${entidade.titulo}</h3>
 			<hr />
-
+			
 			<form class="row needs-validation" name="${entidade.classe}sform" method="POST"
 				action="/${entidade.classe.toLowerCase()}" novalidate>
 
 				<input type="hidden" name="${entidade.campoMestre.getVarNome()}Id" value="*{${entidade.classe.toLowerCase()}Edit.${entidade.campoMestre.getVarNome()}Id}">
 				<input type="hidden" name="id" value="*{${entidade.classe.toLowerCase()}Edit.id}"> 
 				<input type="hidden" name="action" value="editar">
+			
+				<div class="col-12 mb-3">
+					<label for="nomeInput" class="form-label">${mestre.entidadeReferencia.entidade.titulo}</label><p> 
+					<strong>*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.${mestre.entidadeReferencia.campo.toLowerCase()}}</strong>
+				</div>
 					
 					#foreach( $campo in ${entidade.campos} )
 					
@@ -105,8 +110,7 @@
 						<i class="bi-save"></i> Salvar
 					</button>
 					
-					<a class="btn btn-secondary btn-sm py-1" formnovalidate
-						href="/${entidade.classe.toLowerCase()}"><i class="bi-arrow-left"></i> Cancelar</a>
+					<a class="btn btn-secondary btn-sm py-1" formnovalidate href="/${entidade.classe.toLowerCase()}/id?id=*{${mestre.entidadeReferencia.entidade.classe.substring(0,1).toLowerCase()}${mestre.entidadeReferencia.entidade.classe.substring(1)}X.id}"><i class="bi-arrow-left"></i> Cancelar</a>
 					
 					<a class="btn btn-danger btn-sm py-1" href="/${entidade.classe.toLowerCase()}/remover?id=*{${entidade.classe.toLowerCase()}Edit.id}">Remover</a>	
 				</div>

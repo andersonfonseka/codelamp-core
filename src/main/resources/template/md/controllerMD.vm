@@ -149,6 +149,10 @@ public class ${entidade.classe}Controller {
 		model.addAttribute("Dominio${campo.nome}", Dominio${campo.nome}.obterInstancia().getItems());
 		#end
 	#end
+	
+	
+	model.addAttribute("${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}X", ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.obter(${entidade.classe.toLowerCase()}Service.obter(id).get${entidade.entidadeReferencia.classe}Id()));
+	
         model.addAttribute("${entidade.classe.toLowerCase()}Edit", ${entidade.classe.toLowerCase()}Service.obter(id));
         model.addAttribute(PAGECONTENT, EDIT_FORM);
         return LAYOUT;

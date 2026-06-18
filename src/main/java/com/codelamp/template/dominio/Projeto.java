@@ -8,7 +8,7 @@ import org.apache.velocity.VelocityContext;
 import com.codelamp.gerador.GeneratorCore;
 import com.codelamp.gerador.GeneratorWeb;
 
-public class Projeto {
+public class Projeto implements IValidador {
 
 	VelocityContext context = new VelocityContext();
 
@@ -18,6 +18,13 @@ public class Projeto {
 	GeneratorCore generatorCore;
 
 	private List<Modulo> modulos = new ArrayList<>();
+	
+	public Projeto() {}
+	
+	public Projeto(String titulo) {
+		super();
+		this.titulo = titulo;
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -37,7 +44,14 @@ public class Projeto {
 	}
 
 	public void gerar() {
-
+		
+		ValidadorResultado resultado = this.validar();
+		
+		if (!resultado.isValido()) {
+			System.out.println(resultado.getMensagem());
+			return;
+		}
+		
 		try {
 
 			this.generatorWeb = new GeneratorWeb(this);
@@ -65,4 +79,17 @@ public class Projeto {
 		return this.titulo.replace(" ", "").toLowerCase();
 	}
 
+	@Override
+	public ValidadorResultado validar() {
+
+		ValidadorResultado resultado = new ValidadorResultado();
+		
+		if (this.modulos.isEmpty()) {
+			resultado.addMensagem("O projeto deve ter ao menos um modulo");
+			resultado.setValido(false);
+		}
+		
+		return resultado;
+	}
+	
 }

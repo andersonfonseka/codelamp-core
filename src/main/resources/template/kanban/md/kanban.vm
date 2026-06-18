@@ -2,92 +2,116 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 
 <style>
-    .kanban-board {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 20px;
-        overflow-x: auto;
-        padding-bottom: 20px;
-    }
-    
-    .kanban-column {
-        background: #f4f5f7;
-        padding: 15px;
-        border-radius: 8px;
-        min-width: 280px;
-        max-height: 80vh;
-        overflow-y: auto;
-        flex-shrink: 0;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+ html, body { height: 100%; }
 
-    .kanban-card {
-        background: white;
-        padding: 12px;
-        border-radius: 6px;
-        margin-bottom: 12px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        border-left: 5px solid black;
-    }
+.kanban-board{
+  display: grid;
+  gap: 12px;
 
-    .kanban-header {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        text-transform: capitalize;
-    }
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+  height: calc(100vh - 210px); 
+  padding: 10px 10px 18px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  align-items: stretch;
+}
+
+.kanban-column{
+  background: #f4f5f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+
+  height: 100%;
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.kanban-header{
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+
+  position: sticky;
+  top: 0;
+  background: #f4f5f7;
+  padding: 6px 4px;
+  z-index: 1;
+}
+
+.kanban-list{
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.kanban-card{
+  background: #fff;
+  padding: 7px 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.12);
+  border-left: 4px solid #111;
+  font-size: .9rem;
+  line-height: 1.15;
+}
+
+.kanban-card small{
+  font-size: .78rem;
+  opacity: .85;
+}
+
 </style>
 
-	<p>
+<p>
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb admin-bc">
+      <li class="breadcrumb-item"><a href="/">Início</a></li>
+      <li class="breadcrumb-item">${mestre.modulo.titulo}</li>
+      <li class="breadcrumb-item">${mestre.entidadeReferencia.entidade.titulo}</li>
+      <li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
+    </ol>
+  </nav>
+</p>
 
-		<nav aria-label="breadcrumb" class="mb-3">
-			<ol class="breadcrumb admin-bc">
-				<li class="breadcrumb-item"><a href="/">Início</a></li>
-				<li class="breadcrumb-item">${mestre.modulo.titulo}</li>
-				<li class="breadcrumb-item">${mestre.entidadeReferencia.entidade.titulo}</li>
-				<li class="breadcrumb-item active" aria-current="page">${mestre.titulo}</li>
-			</ol>
-		</nav>
-	<p>
-	<div class="bd-example-snippet bd-code-snippet">
-		<div class="bd-example m-0 border-0">
+<div class="bd-example-snippet bd-code-snippet">
+  <div class="bd-example m-0 border-0">
 
-			<strong>*{${mestre.campoMestre.tipo.substring(0,1).toLowerCase()}${mestre.campoMestre.tipo.substring(1)}X.${mestre.entidadeReferencia.campo}}</strong>
-			<hr />
-		
-    		<div class="kanban-board">
+    <strong>*{${mestre.campoMestre.tipo.substring(0,1).toLowerCase()}${mestre.campoMestre.tipo.substring(1)}X.${mestre.entidadeReferencia.campo.toLowerCase()}}</strong>
+    <hr />
 
-			<!-- Itera sobre cada coluna (key do Map) -->
-        	<c:forEach var="entry" items="*{${entidade.classe.toLowerCase()}Map}">
+    <div class="kanban-board">
 
-            <div class="kanban-column">
-                <div class="kanban-header">
-                    ${entry.key}
-                
-				</div>
-				
-                <!-- Lista de candidatos daquela coluna -->
-                <c:forEach var="cand" items="${entry.value}">
-                    <div class="kanban-card">
-                    
-                    ## --- Primeira linha (atributo principal) ---
-        			#set( $primeiro = $entidade.atributos.get(0) )
-        			<strong>*{cand.${primeiro}}</strong><br/>
-                    
-                    #foreach( $att in ${entidade.atributos} )
-	                    #if( $foreach.index > 0 )
-	                    <small>*{cand.${att}}</small><br/>
-	                    #end
-                    #end
-                    
-                    </div>
+      <c:forEach var="entry" items="*{${entidade.classe.toLowerCase()}Map}">
+        <div class="kanban-column">
+          <div class="kanban-header">${entry.key}</div>
 
-                </c:forEach>
+          <div class="kanban-list">
+            <c:forEach var="cand" items="${entry.value}">
+              <div class="kanban-card">
 
-            </div>
+                ## --- Primeira linha (atributo principal) ---
+                #set( $primeiro = $entidade.atributos.get(0) )
+                <strong>*{cand.${primeiro.toLowerCase()}}</strong><br/>
 
-        	</c:forEach>
-        	
-        	</div>
-	</div>
+                #foreach( $att in ${entidade.atributos} )
+                  #if( $foreach.index > 0 )
+                    <small>*{cand.${att.toLowerCase()}}</small><br/>
+                  #end
+                #end
 
+              </div>
+            </c:forEach>
+          </div>
+        </div>
+      </c:forEach>
+
+    </div>
+  </div>
+</div>

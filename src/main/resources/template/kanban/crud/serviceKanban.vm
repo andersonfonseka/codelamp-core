@@ -1,7 +1,7 @@
 package com.example.codelamp.${entidade.classe.toLowerCase()};
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,19 +22,19 @@ public class ${entidade.classe}Service {
 
 	public Map<String, List<${entidade.entidadeReferencia.classe}>> listar() {
 
-		Map<String, List<${entidade.entidadeReferencia.classe}>> kanban = new HashMap<>();
+		Map<String, List<${entidade.entidadeReferencia.classe}>> kanban = new LinkedHashMap<>();
 		
 		List<${entidade.entidadeReferencia.classe}> list = this.${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}Service.listar();
 		
+		List<String> values = Dominio${entidade.campoStatus.nome}.obterInstancia().getItems();
+		
+		for (String string : values) {
+			List<${entidade.entidadeReferencia.classe}> lst = new ArrayList<>();
+			kanban.put(string, lst);
+		}
+		
 		for (${entidade.entidadeReferencia.classe} ${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)} : list) {
-			
-			if (!kanban.containsKey(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.getStatus())) {
-				List<${entidade.entidadeReferencia.classe}> lst = new ArrayList<>();
-				lst.add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
-				kanban.put(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}(), lst);	
-			} else {
-				kanban.get(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
-			}
+			kanban.get(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)}.${entidade.campoStatus.metodoGet()}()).add(${entidade.entidadeReferencia.classe.substring(0,1).toLowerCase()}${entidade.entidadeReferencia.classe.substring(1)});
 		}
 		
 		return kanban;

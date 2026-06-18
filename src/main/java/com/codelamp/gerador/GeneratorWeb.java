@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
-import com.codelamp.template.dominio.Modulo;
 import com.codelamp.template.dominio.Projeto;
 
 public class GeneratorWeb extends Generator {
@@ -16,7 +15,6 @@ public class GeneratorWeb extends Generator {
 	
 	public GeneratorWeb(Projeto projeto) {
 		super(projeto);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void gerarSideBar(VelocityContext context, Projeto projeto) throws Exception, IOException {

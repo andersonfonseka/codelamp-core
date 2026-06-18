@@ -126,19 +126,19 @@ public class MainAcademico extends Modulo {
         adicionar(turma);
         
 
-        Kanban kanbanSolicitacoes = new Kanban("Acompanhamento de Solicitações", "AcompanhamentoSolicitacao");
-        kanbanSolicitacoes.setEntidadeReferencia(new EntidadeReferencia(alunoSolicitacoes, "aluno.nome"));
-        kanbanSolicitacoes.setCampoStatus((CampoEnum) alunoSolicitacoes.getCampo("Status"));
-        
-        kanbanSolicitacoes.setAtributos(new String[]{
-                "aluno.nome",
-                "tipo",
-                "status",
-                "dataAbertura"
-        });
-
-        kanbanSolicitacoes.setMenuVisivel(true);
-        adicionar(kanbanSolicitacoes);
+//        Kanban kanbanSolicitacoes = new Kanban("Acompanhamento de Solicitações", "AcompanhamentoSolicitacao");
+//        kanbanSolicitacoes.setEntidadeReferencia(new EntidadeReferencia(alunoSolicitacoes, "aluno.nome"));
+//        kanbanSolicitacoes.setCampoStatus((CampoEnum) alunoSolicitacoes.getCampo("Status"));
+//        
+//        kanbanSolicitacoes.setAtributos(new String[]{
+//                "aluno.nome",
+//                "tipo",
+//                "status",
+//                "dataAbertura"
+//        });
+//
+//        kanbanSolicitacoes.setMenuVisivel(true);
+//        adicionar(kanbanSolicitacoes);
 
 
 

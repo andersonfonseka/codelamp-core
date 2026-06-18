@@ -16,38 +16,37 @@ public class MainKanban {
 	public static void main(String[] args) {
 		
 		Projeto projeto = new Projeto();
-		projeto.setTitulo("Kanban");
+		projeto.setTitulo("Gestor de Atividades");
 		
 		Modulo modulo = new Modulo();
 		modulo.setTitulo("Basico");
 		
 		projeto.addModulos(modulo);
 		
-		MestreDetalhe tarefas = new MestreDetalhe("Tarefas", "Tarefas", Mestre.build("Pessoa", "Nome", "Pessoa"));
+		MestreDetalhe tarefas = new MestreDetalhe("Tarefas", "Tarefas", Mestre.build("Usuario", "Nome", "Usuario"));
 		
 		tarefas.adicionar(new CampoTexto("Titulo", "Titulo", 12));
-		tarefas.adicionar(new CampoEnum("Status", "Status", 6, new String[] {"INICIADO", "NAO INICIADO", "CONCLUIDA"}));
+		tarefas.adicionar(new CampoEnum("Status", "Status", 6, new String[] {"NAO INICIADO", "INICIADO", "CONCLUIDA"}));
 		
 		modulo.adicionar(tarefas);
 		
-		Kanban kanbanSolicitacoes = new Kanban("Acompanhamento", "Acompanhamento", Mestre.build("Pessoa", "Nome", "Pessoa"));
-        kanbanSolicitacoes.setEntidadeReferencia(new EntidadeReferencia(tarefas, "nome"));
+		Kanban kanbanSolicitacoes = new Kanban("Acompanhamento", "Acompanhamento", Mestre.build("Usuario", "Nome", "Usuario"));
+        kanbanSolicitacoes.setEntidadeReferencia(new EntidadeReferencia(tarefas, "Nome"));
         kanbanSolicitacoes.setCampoStatus((CampoEnum) tarefas.getCampo("Status"));
         
         kanbanSolicitacoes.setAtributos(new String[]{
-                "titulo"
+                "Titulo"
         });
 
         modulo.adicionar(kanbanSolicitacoes);
         
-		Entidade pessoa = new Entidade("Pessoa", "Pessoa");
+		Entidade pessoa = new Entidade("Usuario", "Usuario");
 		pessoa.adicionar(new CampoTexto("Nome", "Nome", 12));
 		
-		pessoa.adicionarAcao(new Acao(tarefas, "Tarefas", "nome"));
-		pessoa.adicionarAcaoKanban(new Acao(kanbanSolicitacoes, "Acompanhar", "pessoa.nome"));
+		pessoa.adicionarAcao(new Acao(tarefas, "Tarefas", "Nome"));
+		pessoa.adicionarAcaoKanban(new Acao(kanbanSolicitacoes, "Acompanhar", "Usuario.Nome"));
 		
 		modulo.adicionar(pessoa);
-
 
 		projeto.gerar();
 		

@@ -1,11 +1,13 @@
 package com.codelamp.template.kanban;
 
+import com.codelamp.template.dominio.IValidador;
+import com.codelamp.template.dominio.ValidadorResultado;
 import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.dominio.campo.CampoEnum;
 import com.codelamp.template.dominio.campo.CampoReferencia;
 import com.codelamp.template.md.MestreDetalhe;
 
-public class Kanban extends MestreDetalhe {
+public class Kanban extends MestreDetalhe implements IValidador {
 
 	private MestreDetalhe mestreDetalhe;
 	
@@ -32,10 +34,12 @@ public class Kanban extends MestreDetalhe {
 	
 	public void setCampoReferencia(CampoReferencia campoReferencia) {
 		this.campoReferencia = campoReferencia;
+		super.adicionar(campoReferencia);
 	}
 
 	public void setCampoStatus(CampoEnum campoStatus) {
 		this.campoStatus = campoStatus;
+		super.adicionar(campoStatus);
 	}
 
 	public CampoEnum getCampoStatus() {
@@ -54,5 +58,33 @@ public class Kanban extends MestreDetalhe {
 		return campoMestre;
 	}
 	
-	
+	public ValidadorResultado validar() {
+		
+		ValidadorResultado resultado = new ValidadorResultado();
+		
+		if (super.validar().isValido()) {
+			
+			if (null == this.getEntidadeReferencia()) {
+				resultado.addMensagem("Eh necessario informar uma entidade de Referencia.");
+				resultado.setValido(false);
+			}
+			
+			if (null == this.getCampoStatus()) {
+				resultado.addMensagem("Eh necessario informar um Campo de Status.");
+				resultado.setValido(false);
+			}
+			
+			if (null == this.getAtributos()) {
+				resultado.addMensagem("Eh necessario informar os Atributos.");
+				resultado.setValido(false);
+			}
+
+			
+		} else {
+			resultado = super.validar();
+		}
+		
+		return resultado;
+	}
+
 }

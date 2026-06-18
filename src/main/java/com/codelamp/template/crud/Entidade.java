@@ -7,12 +7,14 @@ import java.util.Map;
 
 import com.codelamp.template.dominio.Acao;
 import com.codelamp.template.dominio.EntidadeReferencia;
+import com.codelamp.template.dominio.IValidador;
 import com.codelamp.template.dominio.Modulo;
+import com.codelamp.template.dominio.ValidadorResultado;
 import com.codelamp.template.dominio.campo.Campo;
 import com.codelamp.template.kanban.Kanban;
 import com.codelamp.template.md.MestreDetalhe;
 
-public class Entidade {
+public class Entidade implements IValidador {
 	
 	private Modulo modulo;
 	
@@ -20,7 +22,7 @@ public class Entidade {
 	
 	private List<Campo> campos = new ArrayList<Campo>();
 	
-	private Map<String, Campo> camposHash = new HashMap<String, Campo>();
+	private Map<String, Campo> camposMap = new HashMap<String, Campo>();
 	
 	private List<Acao> acoes = new ArrayList<>();
 	
@@ -50,8 +52,8 @@ public class Entidade {
 		
 		Campo campo = null;
 		
-		if (this.camposHash.containsKey(nome)) {
-			campo = this.camposHash.get(nome);
+		if (this.camposMap.containsKey(nome)) {
+			campo = this.camposMap.get(nome);
 		}
 		
 		return campo;
@@ -59,7 +61,7 @@ public class Entidade {
 
 	public void adicionar(Campo campos) {
 		this.campos.add(campos);
-		this.camposHash.put(campos.getNome(), campos);
+		this.camposMap.put(campos.getNome(), campos);
 	}
 
 	public Modulo getModulo() {
@@ -114,6 +116,20 @@ public class Entidade {
 
 	public void setMenuVisivel(boolean isMenuVisivel) {
 		this.isMenuVisivel = isMenuVisivel;
+	}
+
+	@Override
+	public ValidadorResultado validar() {
+
+		ValidadorResultado resultado = new ValidadorResultado();
+		
+		if (this.campos.isEmpty()) {
+			resultado.addMensagem("A entidade deve ter ao menos um campo");
+			resultado.setValido(false);
+		}
+		
+		return resultado;
+	
 	}
 	
 }
